@@ -1,0 +1,13 @@
+{
+  "version": 2,
+  "dgSpecHash": "daJ4CWpLhTV87a0wWEoJWxGH1gcifxi3iwmXgROD3LCdPEW1pQODWXJE/dBn/pUznac3JmOEd4/cRxXk7cQdZg==",
+  "success": true,
+  "projectFilePath": "C:\\Users\\dimas\\Code\\Travelines\\traveline_practice\\lecture1\\test\\test\\test.csproj",
+  "expectedPackageFiles": [
+    "C:\\Users\\dimas\\.nuget\\packages\\microsoft.windowsdesktop.app.ref\\7.0.14\\microsoft.windowsdesktop.app.ref.7.0.14.nupkg.sha512",
+    "C:\\Users\\dimas\\.nuget\\packages\\microsoft.netcore.app.ref\\7.0.14\\microsoft.netcore.app.ref.7.0.14.nupkg.sha512",
+    "C:\\Users\\dimas\\.nuget\\packages\\microsoft.aspnetcore.app.ref\\7.0.14\\microsoft.aspnetcore.app.ref.7.0.14.nupkg.sha512",
+    "C:\\Users\\dimas\\.nuget\\packages\\microsoft.netcore.app.host.win-x64\\7.0.14\\microsoft.netcore.app.host.win-x64.7.0.14.nupkg.sha512"
+  ],
+  "logs": []
+}

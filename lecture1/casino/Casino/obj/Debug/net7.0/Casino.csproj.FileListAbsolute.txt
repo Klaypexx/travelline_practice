@@ -1,0 +1,14 @@
+C:\Users\dimas\Code\Travelines\traveline_practice\lecture1\casino\Casino\Casino\bin\Debug\net7.0\Casino.exe
+C:\Users\dimas\Code\Travelines\traveline_practice\lecture1\casino\Casino\Casino\bin\Debug\net7.0\Casino.deps.json
+C:\Users\dimas\Code\Travelines\traveline_practice\lecture1\casino\Casino\Casino\bin\Debug\net7.0\Casino.runtimeconfig.json
+C:\Users\dimas\Code\Travelines\traveline_practice\lecture1\casino\Casino\Casino\bin\Debug\net7.0\Casino.dll
+C:\Users\dimas\Code\Travelines\traveline_practice\lecture1\casino\Casino\Casino\bin\Debug\net7.0\Casino.pdb
+C:\Users\dimas\Code\Travelines\traveline_practice\lecture1\casino\Casino\Casino\obj\Debug\net7.0\Casino.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\dimas\Code\Travelines\traveline_practice\lecture1\casino\Casino\Casino\obj\Debug\net7.0\Casino.AssemblyInfoInputs.cache
+C:\Users\dimas\Code\Travelines\traveline_practice\lecture1\casino\Casino\Casino\obj\Debug\net7.0\Casino.AssemblyInfo.cs
+C:\Users\dimas\Code\Travelines\traveline_practice\lecture1\casino\Casino\Casino\obj\Debug\net7.0\Casino.csproj.CoreCompileInputs.cache
+C:\Users\dimas\Code\Travelines\traveline_practice\lecture1\casino\Casino\Casino\obj\Debug\net7.0\Casino.dll
+C:\Users\dimas\Code\Travelines\traveline_practice\lecture1\casino\Casino\Casino\obj\Debug\net7.0\refint\Casino.dll
+C:\Users\dimas\Code\Travelines\traveline_practice\lecture1\casino\Casino\Casino\obj\Debug\net7.0\Casino.pdb
+C:\Users\dimas\Code\Travelines\traveline_practice\lecture1\casino\Casino\Casino\obj\Debug\net7.0\Casino.genruntimeconfig.cache
+C:\Users\dimas\Code\Travelines\traveline_practice\lecture1\casino\Casino\Casino\obj\Debug\net7.0\ref\Casino.dll
