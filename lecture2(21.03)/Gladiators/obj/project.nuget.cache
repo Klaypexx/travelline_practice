@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "0F07xcmtEJx0Yzv+efqv1RL6IK4mDBDy2NfjJadfiJJZfQhzLRc2+tIXKRfupBlDNaTD/7ixWX4M7uqaz/kszA==",
+  "dgSpecHash": "aTIxWz0GCfaXeCG4GNuN3HLLdM/9dKvsc8ZvkU9Y5F4M0kRg3/+LR2rB897kghVmN8W0gV2GyaNFUX4fv/Rmcg==",
   "success": true,
-  "projectFilePath": "C:\\Users\\dimas\\Code\\Travelines\\traveline_practice\\lecture2(21.03)\\Gladiators\\Gladiators\\Gladiators.csproj",
+  "projectFilePath": "C:\\Users\\dimas\\Code\\Travelines\\traveline_practice\\lecture2(21.03)\\Gladiators\\Gladiators.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\dimas\\.nuget\\packages\\microsoft.windowsdesktop.app.ref\\7.0.14\\microsoft.windowsdesktop.app.ref.7.0.14.nupkg.sha512",
     "C:\\Users\\dimas\\.nuget\\packages\\microsoft.netcore.app.ref\\7.0.14\\microsoft.netcore.app.ref.7.0.14.nupkg.sha512",

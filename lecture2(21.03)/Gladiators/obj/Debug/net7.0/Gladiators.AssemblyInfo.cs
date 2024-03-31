@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("Gladiators")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+b1b38e458b5a904b5306b9e59a0a0e763e71d9c0")]
 [assembly: System.Reflection.AssemblyProductAttribute("Gladiators")]
 [assembly: System.Reflection.AssemblyTitleAttribute("Gladiators")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

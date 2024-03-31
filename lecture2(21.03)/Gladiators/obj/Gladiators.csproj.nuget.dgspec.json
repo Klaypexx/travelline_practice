@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\dimas\\Code\\Travelines\\traveline_practice\\lecture2(21.03)\\Gladiators\\Gladiators\\Gladiators.csproj": {}
+    "C:\\Users\\dimas\\Code\\Travelines\\traveline_practice\\lecture2(21.03)\\Gladiators\\Gladiators.csproj": {}
   },
   "projects": {
-    "C:\\Users\\dimas\\Code\\Travelines\\traveline_practice\\lecture2(21.03)\\Gladiators\\Gladiators\\Gladiators.csproj": {
+    "C:\\Users\\dimas\\Code\\Travelines\\traveline_practice\\lecture2(21.03)\\Gladiators\\Gladiators.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\dimas\\Code\\Travelines\\traveline_practice\\lecture2(21.03)\\Gladiators\\Gladiators\\Gladiators.csproj",
+        "projectUniqueName": "C:\\Users\\dimas\\Code\\Travelines\\traveline_practice\\lecture2(21.03)\\Gladiators\\Gladiators.csproj",
         "projectName": "Gladiators",
-        "projectPath": "C:\\Users\\dimas\\Code\\Travelines\\traveline_practice\\lecture2(21.03)\\Gladiators\\Gladiators\\Gladiators.csproj",
+        "projectPath": "C:\\Users\\dimas\\Code\\Travelines\\traveline_practice\\lecture2(21.03)\\Gladiators\\Gladiators.csproj",
         "packagesPath": "C:\\Users\\dimas\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\dimas\\Code\\Travelines\\traveline_practice\\lecture2(21.03)\\Gladiators\\Gladiators\\obj\\",
+        "outputPath": "C:\\Users\\dimas\\Code\\Travelines\\traveline_practice\\lecture2(21.03)\\Gladiators\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\dimas\\AppData\\Roaming\\NuGet\\NuGet.Config",
