@@ -1,13 +1,10 @@
-﻿namespace Gladiators.Models.Classes
+﻿namespace Gladiators.Models.Archetype
 {
-    public interface IClass
+    public interface IArchetype
     {
         string Name { get; }
         int Health { get; }
-
         int Damage { get; }
-
         int Initiative { get; }
-
     }
 }

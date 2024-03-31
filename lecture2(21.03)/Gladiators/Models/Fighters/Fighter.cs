@@ -1,29 +1,24 @@
 ﻿using Gladiators.Models.Races;
 using Gladiators.Models.Weapons;
 using Gladiators.Models.Armors;
-using Gladiators.Models.Classes;
+using Gladiators.Models.Archetype;
 
 namespace Gladiators.Models.Fighters
 {
     public class Fighter : IFighter
     {
-        public int MaxHealth => Race.Health + Class.Health;
-
+        public int MaxHealth => Race.Health + Archetype.Health;
         public int MaxArmor => Race.Armor + Armor.Armor;
         public double CurrentHealth { get; private set; }
-
-        public int Initiative => Race.Initiative + Class.Initiative;
+        public int Initiative => Race.Initiative + Archetype.Initiative;
         public string Name { get; }
-
         public IRace Race { get; }
         public IWeapon Weapon { get; }
         public IArmor Armor { get; }
-
-        public IClass Class { get; }
-
-        public Fighter(string name, IRace race, IClass fclass, IWeapon weapon, IArmor armor)
+        public IArchetype Archetype { get; }
+        public Fighter(string name, IRace race, IArchetype fclass, IWeapon weapon, IArmor armor)
         {
-            Class = fclass;
+            Archetype = fclass;
             Name = name;
             Race = race;
             Weapon = weapon;
@@ -31,44 +26,44 @@ namespace Gladiators.Models.Fighters
             CurrentHealth = MaxHealth;
         }
 
-        public void FigheterStat()
+        public string FigheterStat()
         {
-            Console.WriteLine($"{Name} characteristics");
-            Console.WriteLine($"The maximum health indicator - {MaxHealth}\nThe maximum armor indicator - {MaxArmor}\nInitiative - {Initiative}\nRace - {Race.Name}\nClass - {Class.Name}\nWeapon - {Weapon.Name}\nArmor - {Armor.Name}");
+            string fighterStatText = $"{Name} characteristics\nThe maximum health indicator - {MaxHealth}\nThe maximum armor indicator - {MaxArmor}\nInitiative - {Initiative}\nRace - {Race.Name}\nClass - {Archetype.Name}\nWeapon - {Weapon.Name}\nArmor - {Armor.Name}";
+            return fighterStatText;
         }
 
-        public void DamageInformation(double original, double multiply, bool critical, double damage)
+        public string DamageInformation(double original, double multiply, bool critical, double damage)
         {
-            Console.WriteLine($"Default damage: {original}");
+            string damageInformationText = $"Default damage: {original}\n";
             if (multiply > 0)
             {
-                Console.Write("After a successful swing ");
+                damageInformationText += "After a successful swing ";
             }
             else
             {
-                Console.Write("After a failed swing ");
+                damageInformationText += "After a failed swing ";
             }
-            Console.WriteLine($"The damage has changed to {multiply} and became: {damage}");
+            damageInformationText += $"The damage has changed to {multiply} and became: {damage}\n";
 
             if (critical)
             {
-                Console.WriteLine("Critical Damage x2");
+                damageInformationText += "Critical Damage x2\n";
             }
 
-            Console.WriteLine($"Previous damage: {original}. After Damage: {damage}");
+            damageInformationText += $"Previous damage: {original}. After Damage: {damage}";
 
-
+            return damageInformationText;
         }
-        public double CalculateSwingPower(double damage)
+        public double CalculateswingPower(double damage)
         {
             Random rnd = new Random();
-            double[] SwingPower = { -0.2, - 0.1, 0, 0.1 };
-            double SwingPowerValue = SwingPower[rnd.Next(0, SwingPower.Length)];
+            double[] swingPower = { -0.2, - 0.1, 0, 0.1 };
+            double swingPowerValue = swingPower[rnd.Next(0, swingPower.Length)];
 
-            return SwingPowerValue;
+            return swingPowerValue;
         }
 
-        public bool CalculateCriticalDamage()
+        public bool IsCriticalDamage()
         {
             Random rnd = new Random();
             if (rnd.Next(0, 10) == rnd.Next(0, 10))
@@ -80,30 +75,30 @@ namespace Gladiators.Models.Fighters
 
         public double CalculateDamage()
         {
-            double OriginalDamage = (Race.Damage + Class.Damage + Weapon.Damage);
+            double originalDamage = (Race.Damage + Archetype.Damage + Weapon.Damage);
 
-            double SwingPower = CalculateSwingPower(OriginalDamage);
-            bool IsCriticalDamage = CalculateCriticalDamage();
+            double swingPower = CalculateswingPower(originalDamage);
+            bool isCriticalDamage = IsCriticalDamage();
 
-            double MultiplyDamage = OriginalDamage * SwingPower;
-            double Damage = OriginalDamage + MultiplyDamage;
+            double multiplyDamage = originalDamage * swingPower;
+            double damage = originalDamage + multiplyDamage;
 
 
-            if (IsCriticalDamage)
+            if (isCriticalDamage)
             {
-                Damage *= 2;
+                damage *= 2;
             }
 
-            DamageInformation(OriginalDamage, MultiplyDamage, IsCriticalDamage, Damage);
+            string damageInformationText = DamageInformation(originalDamage, multiplyDamage, isCriticalDamage, damage);
+            Console.WriteLine(damageInformationText);
 
-            return Damage;
+            return damage;
         }
-
 
         public void TakeDamage(double damage)
         {
-            double TempHealth = CurrentHealth - Math.Max(damage - MaxArmor, 0);
-            CurrentHealth = Math.Round(TempHealth, 2);
+            double tempHealth = CurrentHealth - Math.Max(damage - MaxArmor, 0);
+            CurrentHealth = Math.Round(tempHealth, 2);
             if (CurrentHealth < 0)
             {
                 CurrentHealth = 0;
