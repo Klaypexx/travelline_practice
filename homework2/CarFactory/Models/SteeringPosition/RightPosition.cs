@@ -8,6 +8,6 @@ namespace CarFactory.Models.SteeringPosition
 {
     public class RightPosition : ISteeringPosition
     {
-        public string Name { get; } = "RightPositiobn";
+        public string Name { get; } = "RightPosition";
     }
 }

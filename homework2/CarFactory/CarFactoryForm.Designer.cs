@@ -1,6 +1,6 @@
 ﻿namespace CarFactory
 {
-    partial class Form1
+    partial class CarFactoryForm
     {
         /// <summary>
         ///  Required designer variable.
@@ -28,7 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form1));
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(CarFactoryForm));
             label1 = new Label();
             carBrand = new ComboBox();
             BrandBox = new GroupBox();
