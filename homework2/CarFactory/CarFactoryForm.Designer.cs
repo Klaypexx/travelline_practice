@@ -183,7 +183,6 @@
             steeringPositionBox.TabIndex = 7;
             steeringPositionBox.TabStop = false;
             steeringPositionBox.Text = "Steering position";
-            steeringPositionBox.Enter += steeringPositionBox_Enter;
             // 
             // carSteeringPosition
             // 
