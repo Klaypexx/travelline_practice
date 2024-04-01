@@ -8,7 +8,7 @@ using CarFactory.Models.Transmission;
 
 namespace CarFactory
 {
-    public class DictionaryProvider
+    public class CarPartsDictionaryProvider
     {
         public Dictionary<string, IBodyType> BodyTypeDictionary = new Dictionary<string, IBodyType>
         {

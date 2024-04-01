@@ -1,5 +1,4 @@
 using CarFactory.Models.BodyType;
-using CarFactory.Models.Brand;
 using CarFactory.Models.CarFactory;
 using CarFactory.Models.CarModel;
 using CarFactory.Models.Color;
@@ -28,11 +27,8 @@ namespace CarFactory
 
         private void button1_Click_1(object sender, EventArgs e)
         {
-            DictionaryProvider newDictionary = new DictionaryProvider();
-
             ICar car = PickConfigurations();
             string carCharacteristicsText = CarCharacteristicsMessage(car);
-
             MessageBox.Show(carCharacteristicsText);
         }
 
@@ -43,7 +39,7 @@ namespace CarFactory
         }
         private ICar PickConfigurations()
         {
-            DictionaryProvider newDictionary = new DictionaryProvider();
+            CarPartsDictionaryProvider newDictionary = new CarPartsDictionaryProvider();
             IBodyType bodyType = newDictionary.BodyTypeDictionary[carBodyType.SelectedItem.ToString()];
             IBrand brand = newDictionary.BrandDictionary[carBrand.SelectedItem.ToString()];
             IColor color = newDictionary.ColorDictionary[carColor.SelectedItem.ToString()];

@@ -57,7 +57,7 @@
             // 
             label1.Anchor = AnchorStyles.Top;
             label1.Font = new Font("Showcard Gothic", 16F, FontStyle.Bold, GraphicsUnit.Point);
-            label1.Location = new Point(265, 9);
+            label1.Location = new Point(221, 9);
             label1.Name = "label1";
             label1.Size = new Size(359, 40);
             label1.TabIndex = 3;
@@ -222,7 +222,7 @@
             confirmButton.UseVisualStyleBackColor = true;
             confirmButton.Click += button1_Click_1;
             // 
-            // Form1
+            // CarFactoryForm
             // 
             AutoScaleDimensions = new SizeF(10F, 25F);
             AutoScaleMode = AutoScaleMode.Font;
@@ -230,7 +230,7 @@
             Controls.Add(flowLayoutPanel1);
             Controls.Add(label1);
             Icon = (Icon)resources.GetObject("$this.Icon");
-            Name = "Form1";
+            Name = "CarFactoryForm";
             StartPosition = FormStartPosition.CenterScreen;
             Text = "CarFactory";
             Load += Form1_Load;

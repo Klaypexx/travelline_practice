@@ -4,11 +4,6 @@ using CarFactory.Models.Color;
 using CarFactory.Models.Engine;
 using CarFactory.Models.SteeringPosition;
 using CarFactory.Models.Transmission;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace CarFactory.Models.CarFactory
 {
