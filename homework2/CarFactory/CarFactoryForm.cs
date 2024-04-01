@@ -15,6 +15,7 @@ namespace CarFactory
             InitializeComponent();
             this.Size = new Size(800, 600);
         }
+
         private void Form1_Load(object sender, EventArgs e)
         {
             carBrand.SelectedIndex = 0;
@@ -37,6 +38,7 @@ namespace CarFactory
             string carCharacteristicsText = $"Your configuration:\nBrand - {car.Brand.Name}\nEngine - {car.Engine.Name}\nMaximum speed - {car.Engine.MaxSpeed} km\\h\nGears - {car.Engine.MaxGears}\nBody type - {car.BodyType.Name}\nBody color - {car.Color.Name}\nThe steering wheel position - {car.SteeringPosition.Name}\nTransmission - {car.Transmission.Name}";
             return carCharacteristicsText;
         }
+
         private ICar PickConfigurations()
         {
             CarPartsDictionaryProvider newDictionary = new CarPartsDictionaryProvider();
@@ -48,11 +50,6 @@ namespace CarFactory
             ITransmission transmission = newDictionary.TransmissionDictionary[carTransmission.SelectedItem.ToString()];
 
             return new Car(brand, engine, bodyType, color, steeringPosition, transmission);
-        }
-
-        private void steeringPositionBox_Enter(object sender, EventArgs e)
-        {
-
         }
     }
 }
