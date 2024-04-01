@@ -56,12 +56,12 @@
             // label1
             // 
             label1.Anchor = AnchorStyles.Top;
-            label1.Font = new Font("Showcard Gothic", 16F, FontStyle.Bold, GraphicsUnit.Point);
-            label1.Location = new Point(221, 9);
+            label1.Font = new Font("Segoe UI Black", 18F, FontStyle.Bold, GraphicsUnit.Point);
+            label1.Location = new Point(121, 9);
             label1.Name = "label1";
-            label1.Size = new Size(359, 40);
+            label1.Size = new Size(565, 62);
             label1.TabIndex = 3;
-            label1.Text = "Выберите свою машину";
+            label1.Text = "Choose your car configuration";
             // 
             // carBrand
             // 
@@ -83,7 +83,7 @@
             BrandBox.Size = new Size(215, 167);
             BrandBox.TabIndex = 6;
             BrandBox.TabStop = false;
-            BrandBox.Text = "Модель машины";
+            BrandBox.Text = "Car brand";
             // 
             // bodyTypeBox
             // 
@@ -94,7 +94,7 @@
             bodyTypeBox.Size = new Size(215, 167);
             bodyTypeBox.TabIndex = 7;
             bodyTypeBox.TabStop = false;
-            bodyTypeBox.Text = "Форма кузова";
+            bodyTypeBox.Text = "Body shape";
             // 
             // carBodyType
             // 
@@ -116,7 +116,7 @@
             colorBox.Size = new Size(215, 167);
             colorBox.TabIndex = 8;
             colorBox.TabStop = false;
-            colorBox.Text = "Цвет кузова";
+            colorBox.Text = "Body color";
             // 
             // carColor
             // 
@@ -138,7 +138,7 @@
             engineBox.Size = new Size(215, 167);
             engineBox.TabIndex = 8;
             engineBox.TabStop = false;
-            engineBox.Text = "Тип двигателя";
+            engineBox.Text = "Engine type";
             // 
             // carEngine
             // 
@@ -160,7 +160,7 @@
             transmissionBox.Size = new Size(215, 167);
             transmissionBox.TabIndex = 8;
             transmissionBox.TabStop = false;
-            transmissionBox.Text = "Коробка передач";
+            transmissionBox.Text = "Transmission";
             // 
             // carTransmission
             // 
@@ -182,7 +182,8 @@
             steeringPositionBox.Size = new Size(215, 167);
             steeringPositionBox.TabIndex = 7;
             steeringPositionBox.TabStop = false;
-            steeringPositionBox.Text = "Позиция руля";
+            steeringPositionBox.Text = "Steering position";
+            steeringPositionBox.Enter += steeringPositionBox_Enter;
             // 
             // carSteeringPosition
             // 
@@ -213,12 +214,12 @@
             // confirmButton
             // 
             confirmButton.Anchor = AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
-            confirmButton.Font = new Font("Showcard Gothic", 18F, FontStyle.Bold, GraphicsUnit.Point);
+            confirmButton.Font = new Font("Segoe UI", 18F, FontStyle.Bold, GraphicsUnit.Point);
             confirmButton.Location = new Point(3, 349);
             confirmButton.Name = "confirmButton";
             confirmButton.Size = new Size(660, 52);
             confirmButton.TabIndex = 10;
-            confirmButton.Text = "Подтвердить";
+            confirmButton.Text = "Confirm";
             confirmButton.UseVisualStyleBackColor = true;
             confirmButton.Click += button1_Click_1;
             // 

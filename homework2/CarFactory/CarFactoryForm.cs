@@ -34,7 +34,7 @@ namespace CarFactory
 
         private string CarCharacteristicsMessage(ICar car)
         {
-            string carCharacteristicsText = $"Ваша конфигурация:\nМарка - {car.Brand.Name}\nДвигатель - {car.Engine.Name}\nМаксимальная скорость - {car.Engine.MaxSpeed} км\\ч\nКоличество передач - {car.Engine.MaxGears}\nТип кузова - {car.BodyType.Name}\nЦвет кузова - {car.Color.Name}\nПозиция руля - {car.SteeringPosition.Name}\nТрансмиссия - {car.Transmission.Name}";
+            string carCharacteristicsText = $"Your configuration:\nBrand - {car.Brand.Name}\nEngine - {car.Engine.Name}\nMaximum speed - {car.Engine.MaxSpeed} km\\h\nGears - {car.Engine.MaxGears}\nBody type - {car.BodyType.Name}\nBody color - {car.Color.Name}\nThe steering wheel position - {car.SteeringPosition.Name}\nTransmission - {car.Transmission.Name}";
             return carCharacteristicsText;
         }
         private ICar PickConfigurations()
@@ -48,6 +48,11 @@ namespace CarFactory
             ITransmission transmission = newDictionary.TransmissionDictionary[carTransmission.SelectedItem.ToString()];
 
             return new Car(brand, engine, bodyType, color, steeringPosition, transmission);
+        }
+
+        private void steeringPositionBox_Enter(object sender, EventArgs e)
+        {
+
         }
     }
 }
