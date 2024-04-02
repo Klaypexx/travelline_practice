@@ -13,9 +13,9 @@
         try
         {
             amount = int.Parse(amountOfProduct);
-        } catch (Exception ex)
+        } catch
         {
-            Console.WriteLine(ex.Message);
+            Console.WriteLine($"Входная строка была введена в неправильном формате.");
             return;
         }
 
@@ -23,13 +23,13 @@
         string userName = Console.ReadLine();
 
         Console.Write("Введите ваш адрес: ");
-        string adress = Console.ReadLine();
+        string address = Console.ReadLine();
 
         DateTime currentDate = DateTime.Now;
         DateTime deliveryDate = currentDate.AddDays(3);
 
-        string confirmationText = $"Здравствуйте, {userName}, вы заказали {amount} {productName} на адрес {adress}, все верно?\nДля подтверждения напишите - да";
-        string deliveryInformationText = $"{userName}!\nВаш заказ {productName} в количестве {amount} оформлен! \nОжидайте доставку по адресу {adress} к {deliveryDate}";
+        string confirmationText = $"Здравствуйте, {userName}, вы заказали {amount} {productName} на адрес {address}, все верно?\nДля подтверждения напишите - да";
+        string deliveryInformationText = $"{userName}!\nВаш заказ {productName} в количестве {amount} оформлен! \nОжидайте доставку по адресу {address} к {deliveryDate}";
 
         Console.WriteLine(confirmationText);
         string isCorrect = Console.ReadLine().Trim().ToLower();
