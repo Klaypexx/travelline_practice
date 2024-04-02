@@ -11,22 +11,18 @@ namespace Fighters
         public static Fighter NewFighter()
         {
             string fightername = Createname();
-            IRace fighterRace = PickOption("race", new Dictionary<int, Func<IRace>> {
-                { 1, () => new Human() },
-                { 2, () => new Lizard() }
-            });
-            IArchetype fighterArchetype = PickOption("class", new Dictionary<int, Func<IArchetype>> {
-                { 1, () => new Warrior() },
-                { 2, () => new Mage() }
-            });
-            IWeapon fighterWeapon = PickOption("weapon", new Dictionary<int, Func<IWeapon>> {
-                { 1, () => new NoWeapon() },
-                { 2, () => new Bat() }
-            });
-            IArmor fighterArmor = PickOption("armor", new Dictionary<int, Func<IArmor>> {
-                { 1, () => new NoArmor() },
-                { 2, () => new IronArmor() }
-            });
+
+            List<IRace> races = new() { new Human(), new Lizard() };
+            IRace fighterRace = PickOption("race", races);
+
+            List<IArchetype> archetype = new() { new Warrior(), new Mage() };
+            IArchetype fighterArchetype = PickOption("class", archetype);
+
+            List<IWeapon> weapon = new() { new NoWeapon(), new Bat() };
+            IWeapon fighterWeapon = PickOption("weapon", weapon);
+
+            List<IArmor> armor = new() { new NoArmor(), new IronArmor() };
+            IArmor fighterArmor = PickOption("armor", armor);
 
             return new Fighter(fightername, fighterRace, fighterArchetype, fighterWeapon, fighterArmor);
         }
@@ -49,26 +45,28 @@ namespace Fighters
             }
         }
 
-        private static T PickOption<T>(string optionType, Dictionary<int, Func<T>> options)
+        private static T PickOption<T>(string optionType, List<T> options)
         {
             while (true)
             {
                 Console.WriteLine($"Select a fighter's {optionType} by number from the list:");
-                foreach (KeyValuePair<int, Func<T>> option in options)
+                int countOption = 1;
+                foreach (T option in options)
                 {
-                    Console.WriteLine($"{option.Key}. {option.Value().GetType().Name}");
+                    Console.WriteLine($"{countOption}. {option.GetType().Name}");
+                    countOption++;
                 }
 
                 int currentOption = int.Parse(Console.ReadLine());
 
-                if (options.ContainsKey(currentOption))
-                {
-                    return options[currentOption]();
-                }
-                else
+                if (options.Count < currentOption)
                 {
                     Console.WriteLine($"There is no {optionType} under this number");
                     Console.ReadLine();
+                }
+                else
+                {
+                    return options[currentOption - 1];
                 }
             }
         }

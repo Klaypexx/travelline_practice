@@ -10,9 +10,30 @@ namespace Fighters
 
             Console.WriteLine("Choose fighters count:");
 
-            int fightersCount = int.Parse(Console.ReadLine());
+            string fightersCountText = Console.ReadLine();
+            int fightersCount = 0;
 
-            List<Fighter> fightersList = new List<Fighter>();
+            try
+            {
+                fightersCount = int.Parse(fightersCountText);
+                if (fightersCount <= 0)
+                {
+                    throw new Exception("Invalid input value. It must be greater than 0");
+                }
+            }
+            catch (FormatException e)
+            {
+                Console.WriteLine(e);
+                return;
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+                return;
+            }
+
+
+            List<Fighter> fightersList = new();
 
             for (int i = 0; i < fightersCount; i++)
             {
@@ -23,14 +44,14 @@ namespace Fighters
                 string isStat = Console.ReadLine().Trim().ToLower();
                 if (isStat == "yes")
                 {
-                    string currentFighterStat = fightersList[i].FigheterStat();
+                    string currentFighterStat = fightersList[i].GetFigheterStat();
                     Console.WriteLine(currentFighterStat);
                 }
                 Console.ReadLine();
             }
 
-            var master = new GameManager();
-            var winner = master.GetWinner(fightersList);
+            GameManager master = new GameManager();
+            Fighter winner = master.GetWinner(fightersList);
 
             Console.ForegroundColor = ConsoleColor.Yellow;
             Console.WriteLine($"The winner is {winner.Name} ");

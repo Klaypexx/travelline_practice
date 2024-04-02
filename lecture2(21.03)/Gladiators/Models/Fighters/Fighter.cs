@@ -25,59 +25,21 @@ namespace Gladiators.Models.Fighters
             Armor = armor;
             CurrentHealth = MaxHealth;
         }
-
-        public string FigheterStat()
+        public string GetFigheterStat()
         {
-            string fighterStatText = $"{Name} characteristics\nThe maximum health indicator - {MaxHealth}\nThe maximum armor indicator - {MaxArmor}\nInitiative - {Initiative}\nRace - {Race.Name}\nClass - {Archetype.Name}\nWeapon - {Weapon.Name}\nArmor - {Armor.Name}";
+            string fighterStatText = $"{Name} characteristics\nThe maximum health indicator - {MaxHealth}\n";
+            fighterStatText += $"The maximum armor indicator - {MaxArmor}\nInitiative - {Initiative}\n";
+            fighterStatText += $"Race - {Race.Name}\nClass - {Archetype.Name}\n";
+            fighterStatText += $"Weapon - {Weapon.Name}\nArmor - {Armor.Name}";
+
             return fighterStatText;
         }
 
-        public string DamageInformation(double original, double multiply, bool critical, double damage)
-        {
-            string damageInformationText = $"Default damage: {original}\n";
-            if (multiply > 0)
-            {
-                damageInformationText += "After a successful swing ";
-            }
-            else
-            {
-                damageInformationText += "After a failed swing ";
-            }
-            damageInformationText += $"The damage has changed to {multiply} and became: {damage}\n";
-
-            if (critical)
-            {
-                damageInformationText += "Critical Damage x2\n";
-            }
-
-            damageInformationText += $"Previous damage: {original}. After Damage: {damage}";
-
-            return damageInformationText;
-        }
-        public double CalculateswingPower(double damage)
-        {
-            Random rnd = new Random();
-            double[] swingPower = { -0.2, - 0.1, 0, 0.1 };
-            double swingPowerValue = swingPower[rnd.Next(0, swingPower.Length)];
-
-            return swingPowerValue;
-        }
-
-        public bool IsCriticalDamage()
-        {
-            Random rnd = new Random();
-            if (rnd.Next(0, 10) == rnd.Next(0, 10))
-            {
-                return true;
-            }
-            return false;
-        }
-
-        public double CalculateDamage()
+        public double GetDamage()
         {
             double originalDamage = (Race.Damage + Archetype.Damage + Weapon.Damage);
 
-            double swingPower = CalculateswingPower(originalDamage);
+            double swingPower = GetSwingPower();
             bool isCriticalDamage = IsCriticalDamage();
 
             double multiplyDamage = originalDamage * swingPower;
@@ -89,7 +51,7 @@ namespace Gladiators.Models.Fighters
                 damage *= 2;
             }
 
-            string damageInformationText = DamageInformation(originalDamage, multiplyDamage, isCriticalDamage, damage);
+            string damageInformationText = GetDamageInformation(originalDamage, Math.Round(multiplyDamage, 2), isCriticalDamage, damage);
             Console.WriteLine(damageInformationText);
 
             return damage;
@@ -104,5 +66,46 @@ namespace Gladiators.Models.Fighters
                 CurrentHealth = 0;
             }
         }
+        private string GetDamageInformation(double original, double multiply, bool critical, double damage)
+        {
+            string damageInformationText = $"Default damage: {original}\n";
+            if (critical)
+            {
+                damageInformationText += "Critical Damage x2\n";
+            }
+            if (multiply > 0)
+            {
+                damageInformationText += "After a successful swing ";
+            }
+            else
+            {
+                damageInformationText += "After a failed swing ";
+            }
+            damageInformationText += $"The damage has changed to {multiply} and became: {damage}\n";
+
+
+            damageInformationText += $"Previous damage: {original}. After Damage: {damage}";
+
+            return damageInformationText;
+        }
+        private double GetSwingPower()
+        {
+            Random rnd = new Random();
+            double[] swingPower = { -0.2, - 0.1, 0, 0.1 };
+            double swingPowerValue = swingPower[rnd.Next(0, swingPower.Length)];
+
+            return swingPowerValue;
+        }
+
+        private bool IsCriticalDamage()
+        {
+            Random rnd = new Random();
+            if (rnd.Next(0, 10) == rnd.Next(0, 10))
+            {
+                return true;
+            }
+            return false;
+        }
+
     }
 }

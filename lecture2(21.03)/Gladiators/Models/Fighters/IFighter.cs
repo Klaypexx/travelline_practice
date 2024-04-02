@@ -17,7 +17,7 @@ namespace Gladiators.Models.Fighters
         public IArmor Armor { get; }
         public IArchetype Archetype { get; }
         public void TakeDamage(double damage);
-        public double CalculateDamage();
-        public string FigheterStat();
+        public double GetDamage();
+        public string GetFigheterStat();
     }
 }
