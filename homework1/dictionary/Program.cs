@@ -1,53 +1,54 @@
-﻿internal class Programm
-{
-    static int Main()
-    {
-        Dictionary<string, string> dictionary = new Dictionary<string, string>();
-        bool isExit = true;
+﻿using System.Collections.Generic;
 
-        do
+internal class Programm
+{
+    private static Dictionary<string, string> Dictionary { get; set; } = new();
+    public static int Main()
+    {
+        while (true)
         {
-            Console.WriteLine($"Выберите одну из команд:");
-            Console.WriteLine("1 - AddTranslation");
-            Console.WriteLine("2 - RemoveTranslation");
-            Console.WriteLine("3 - ChangeTranslation");
-            Console.WriteLine("4 - Translate");
-            Console.WriteLine("5 - AddTranslateFromFile");
-            Console.WriteLine("6 - ShowAllDictionary");
-            Console.WriteLine("0 - Exit");
+            MenuText();
 
             string option = Console.ReadLine().Trim();
+            if (option == "0") break;
+            bool emptyDictonaryCondition = Dictionary.Count == 0 && (option == "2" || option == "3" || option == "4" || option == "6");
 
-            if ((dictionary.Count == 0 && option == "2") || (dictionary.Count == 0 && option == "3") || (dictionary.Count == 0 && option == "4") || (dictionary.Count == 0 && option == "6"))
+            if (emptyDictonaryCondition)
             {
                 Console.WriteLine("Словарь пуст");
                 Console.ReadLine();
                 continue;
             }
 
+            switchOption(option);
+
+        }
+
+        return 1;
+    }
+
+    public static void switchOption(string option) 
+    {
             switch (option)
             {
                 case "1":
-                    AddTranslation(ref dictionary);
-                    break;
-                case "0":
-                    isExit = false;
+                    AddTranslation();
                     break;
                 case "2":
-                    RemoveTranslation(ref dictionary);
+                    RemoveTranslation();
                     break;
                 case "3":
-                    ChangeTranslation(ref dictionary);
+                    ChangeTranslation();
                     break;
                 case "4":
-                    Translate(ref dictionary);
+                    Translate();
                     break;
                 case "5":
-                    AddTranslationFromFile(ref dictionary);
+                    AddTranslationFromFile();
                     break;
                 case "6":
                     Console.WriteLine("Ваш словарь:");
-                    ShowAllDictionary(ref dictionary);
+                    ShowAllDictionary();
                     Console.ReadLine();
                     break;
                 default:
@@ -55,39 +56,50 @@
                     Console.ReadLine();
                     break;
             }
-        } while (isExit);
-
-        return 1;
     }
 
-    static void ShowAllDictionary(ref Dictionary<string, string> dictionary)
+    public static void MenuText()
     {
-        foreach (KeyValuePair<string, string> currentWord in dictionary)
+        Console.WriteLine($"Выберите одну из команд:");
+        Console.WriteLine("1 - AddTranslation");
+        Console.WriteLine("2 - RemoveTranslation");
+        Console.WriteLine("3 - ChangeTranslation");
+        Console.WriteLine("4 - Translate");
+        Console.WriteLine("5 - AddTranslateFromFile");
+        Console.WriteLine("6 - ShowAllDictionary");
+        Console.WriteLine("0 - Exit");
+    }
+
+    public static void ShowAllDictionary()
+    {
+        foreach (KeyValuePair<string, string> currentWord in Dictionary)
         {
             Console.WriteLine($"{currentWord.Key} - {currentWord.Value}");
         }
     }
 
-    static void AddTranslationFromFile(ref Dictionary<string, string> dictionary)
+    public static void AddTranslationFromFile()
     {
-        bool isExit = true;
-
-        do
+        while (true)
         {
             string pathToFile = GetUserInputFileName();
             if (pathToFile == "0")
             {
-                isExit = false;
+                break;
             }
             else if (pathToFile != null)
             {
-                LoadDictionaryFromFile(pathToFile, ref dictionary);
+                LoadDictionaryFromFile(pathToFile);
+            }
+            else
+            {
+                Console.WriteLine("Вы не ввели имя файла");
             }
 
-        } while (isExit);
+        }
     }
 
-    static string GetUserInputFileName()
+    public static string GetUserInputFileName()
     {
         Console.WriteLine("Введите имя файла. Для выхода введите 0");
         string pathToFile = Console.ReadLine();
@@ -95,14 +107,10 @@
         {
             return pathToFile;
         }
-        else
-        {
-            Console.WriteLine("Входной файл пуст\n");
-            return null; // В случае некорректного завершения цикла
-        }
+        return null;
     }
 
-    static void LoadDictionaryFromFile(string pathToFile, ref Dictionary<string, string> dictionary)
+    public static void LoadDictionaryFromFile(string pathToFile)
     {
         try
         {
@@ -114,9 +122,9 @@
                     string[] words = text.Split(' ');
                     if (words.Length == 2)
                     {
-                        if (!dictionary.ContainsKey(words[0]))
+                        if (!Dictionary.ContainsKey(words[0]))
                         {
-                            dictionary.Add(words[0], words[1]);
+                            Dictionary.Add(words[0], words[1]);
                         }
                     }
                     text = reader.ReadLine();
@@ -130,131 +138,115 @@
         }
     }
 
-    static void ChangeTranslation(ref Dictionary<string, string> dictionary)
+    public static void ChangeTranslation()
     {
-        bool isExit = true;
-
-        do
+        while (true)
         {
             Console.WriteLine("Введите слово для замены перевода. Для выхода введите 0");
             string word = Console.ReadLine();
             if (word == "0")
             {
-                isExit = false;
                 break;
             }
-            else if (dictionary.ContainsKey(word))
+            else if (Dictionary.ContainsKey(word))
             {
                 Console.Write("Введите новый перевод: ");
                 string newEngWord = Console.ReadLine();
-                dictionary[word] = newEngWord;
+                Dictionary[word] = newEngWord;
                 Console.WriteLine("Перевод изменен");
             }
             else
             {
                 Console.WriteLine("Слово по вашему запросу не найдено в словаре");
             }
-        } while (isExit);
+        }
     }
 
-    static void Translate(ref Dictionary<string, string> dictionary)
+    public static void Translate()
+{
+    while (true)
     {
-        bool isExit = true;
+        Console.WriteLine("На какой язык вы хотите перевести слово? Для выхода 0");
+        Console.WriteLine("1 - Русский");
+        Console.WriteLine("2 - Английский");
+        string language = Console.ReadLine();
 
-        do
+        if (language == "0")
         {
-            Console.WriteLine("На какой язык вы хотите перевести слово? Для выхода 0");
-            Console.WriteLine("1 - Русский");
-            Console.WriteLine("2 - Английский");
-            string language = Console.ReadLine();
-            if (language == "0")
-            {
-                isExit = false;
-                break;
-            }
-            if (language == "1" || language == "2")
-            {
-                Console.WriteLine("Введите слово");
-                string word = Console.ReadLine();
-                if ((language == "2" && dictionary.ContainsKey(word)) || (language == "1" && dictionary.ContainsValue(word)))
-                {
-                    if (language == "2")
-                    {
-                        Console.WriteLine($"{word} - {dictionary[word]}");
-                        Console.ReadLine();
-                    }
-                    else if (language == "1")
-                    {
-                        foreach (var currentWord in dictionary)
-                        {
-                            if (currentWord.Value == word)
-                            {
-                                Console.WriteLine($"{word} - {currentWord.Key}");
-                                Console.ReadLine();
-                            }
-                        }
-                    }
-                }
-                else
-                {
-                    Console.WriteLine("Слово по вашему запросу не найдено в словаре");
-                }
-            }
-            else
-            {
-                Console.WriteLine("Ошибка");
-            }
-        } while (isExit);
+            break;
+        }
+
+        if (language != "1" && language != "2")
+        {
+            Console.WriteLine("Ошибка");
+            continue;
+        }
+
+        Console.WriteLine("Введите слово");
+        string word = Console.ReadLine();
+
+        if (language == "2" && Dictionary.ContainsKey(word))
+        {
+            Console.WriteLine($"{word} - {Dictionary[word]}");
+            Console.ReadLine();
+        }
+        else if (language == "1" && Dictionary.ContainsValue(word))
+        {
+            string matchingWord = Dictionary.FirstOrDefault(currentWord => currentWord.Value == word).Key;
+            Console.WriteLine($"{word} - {matchingWord}");
+            Console.ReadLine();
+        }
+        else
+        {
+            Console.WriteLine("Слово по вашему запросу не найдено в словаре");
+        }
+
     }
+}
 
-    static void RemoveTranslation(ref Dictionary<string, string> dictionary)
+
+    public static void RemoveTranslation()
     {
-        bool isExit = true;
-
-        do
+        while (true)
         {
             Console.WriteLine("Введите слово для удаления перевода. Для выхода введите 0 ");
             string word = Console.ReadLine();
             if (word == "0")
             {
-                isExit = false;
                 break;
             }
-            else if (dictionary.ContainsKey(word))
+            else if (Dictionary.ContainsKey(word))
             {
-                dictionary[word] = "Перевод отсутствует";
+                Dictionary[word] = "Перевод отсутствует";
                 Console.WriteLine("Перевод слова удален из словаря");
             }
             else
             {
                 Console.WriteLine("Слово по вашему запросу не найдено в словаре");
             }
-        } while (isExit);
+        }
     }
 
-    static void AddTranslation(ref Dictionary<string, string> dictionary)
+    public static void AddTranslation()
     {
-        bool isExit = true;
-
-        do
+        while (true) 
         {
             Console.WriteLine("Введите 2 значения: слово на русском и перевод. Для выхода 0");
             string text = Console.ReadLine();
             string[] words = text.Split(' ');
             if (text == "0")
             {
-                isExit = false;
                 break;
             }
             else if (words.Length == 2)
             {
-                if (dictionary.ContainsKey(words[0]))
+                if (Dictionary.ContainsKey(words[0]))
                 {
                     Console.WriteLine("Слово уже находится в соваре");
                 }
                 else
                 {
-                    dictionary.Add(words[0], words[1]);
+                    Dictionary.Add(words[0], words[1]);
                     Console.WriteLine("Слово и перевод добавлены в словарь");
                 }
 
@@ -263,6 +255,6 @@
             {
                 Console.WriteLine("Ошибка ввода");
             }
-        } while (isExit);
+        }
     }
 }
