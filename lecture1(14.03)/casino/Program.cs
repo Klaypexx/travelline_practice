@@ -3,6 +3,8 @@
     static void Main()
     {
         int balance = 10000;
+        int someRandomNumber = 20;
+        HashSet<int> luckyNumebrs = new() { 18, 19, 20 };
         const int multiplicator = 2;
         Random rand = new Random();
 
@@ -29,8 +31,8 @@
                 continue;
             }
 
-            int randomNumber = rand.Next(1, 20);
-            if (randomNumber == 18 || randomNumber == 19 || randomNumber == 20)
+            int randomNumber = rand.Next(1, someRandomNumber);
+            if (luckyNumebrs.Contains(randomNumber))
             {
                 int winSum = bet * (1 + (multiplicator * randomNumber % 17));
                 balance += winSum;
