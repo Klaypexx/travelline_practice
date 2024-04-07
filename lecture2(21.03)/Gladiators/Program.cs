@@ -2,7 +2,7 @@
 
 namespace Fighters
 {
-    public class Programm
+    public class Program
     {
         public static void Main()
         {
@@ -18,7 +18,8 @@ namespace Fighters
                 fightersCount = int.Parse(fightersCountText);
                 if (fightersCount <= 0)
                 {
-                    throw new Exception("Invalid input value. It must be greater than 0");
+                    Console.WriteLine("Invalid input value. It must be greater than 0");
+                    return;
                 }
             }
             catch (FormatException e)
@@ -26,12 +27,6 @@ namespace Fighters
                 Console.WriteLine(e);
                 return;
             }
-            catch (Exception e)
-            {
-                Console.WriteLine(e);
-                return;
-            }
-
 
             List<Fighter> fightersList = new();
 

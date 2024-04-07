@@ -7,44 +7,43 @@ namespace Gladiators.Models.Fighters
 {
     public class Fighter : IFighter
     {
-        public int MaxHealth => Race.Health + Archetype.Health;
-        public int MaxArmor => Race.Armor + Armor.Armor;
+        public int MaxArmor => _race.Armor + _armor.Armor;
         public double CurrentHealth { get; private set; }
-        public int Initiative => Race.Initiative + Archetype.Initiative;
+        public int Initiative => _race.Initiative + _archetype.Initiative;
         public string Name { get; }
-        public IRace Race { get; }
-        public IWeapon Weapon { get; }
-        public IArmor Armor { get; }
-        public IArchetype Archetype { get; }
+        private int MaxHealth => _race.Health + _archetype.Health;
+        private IRace _race;
+        private IWeapon _weapon;
+        private IArmor _armor;
+        private IArchetype _archetype;
         public Fighter(string name, IRace race, IArchetype fclass, IWeapon weapon, IArmor armor)
         {
-            Archetype = fclass;
+            _archetype = fclass;
             Name = name;
-            Race = race;
-            Weapon = weapon;
-            Armor = armor;
+            _race = race;
+            _weapon = weapon;
+            _armor = armor;
             CurrentHealth = MaxHealth;
         }
         public string GetFigheterStat()
         {
             string fighterStatText = $"{Name} characteristics\nThe maximum health indicator - {MaxHealth}\n";
             fighterStatText += $"The maximum armor indicator - {MaxArmor}\nInitiative - {Initiative}\n";
-            fighterStatText += $"Race - {Race.Name}\nClass - {Archetype.Name}\n";
-            fighterStatText += $"Weapon - {Weapon.Name}\nArmor - {Armor.Name}";
+            fighterStatText += $"Race - {_race.Name}\nClass - {_archetype.Name}\n";
+            fighterStatText += $"Weapon - {_weapon.Name}\nArmor - {_armor.Name}";
 
             return fighterStatText;
         }
 
         public double GetDamage()
         {
-            double originalDamage = (Race.Damage + Archetype.Damage + Weapon.Damage);
+            double originalDamage = (_race.Damage + _archetype.Damage + _weapon.Damage);
 
             double swingPower = GetSwingPower();
             bool isCriticalDamage = IsCriticalDamage();
 
             double multiplyDamage = originalDamage * swingPower;
             double damage = originalDamage + multiplyDamage;
-
 
             if (isCriticalDamage)
             {
@@ -106,6 +105,5 @@ namespace Gladiators.Models.Fighters
             }
             return false;
         }
-
     }
 }

@@ -18,8 +18,9 @@ namespace Fighters
             Random rnd = new Random();
 
             int opponentIndex;
-            int roundOwnerIndex = -1;
             int round = 1;
+
+            fighterList = fighterList.OrderByDescending(f => f.Initiative).ToList();
 
             while (true)
             {
@@ -27,39 +28,26 @@ namespace Fighters
                 {
                     return fighterList[0];
                 } 
-                
-                bool isInit = false;
-                while (!isInit)
-                {
-                    for (int i = 0; i < fighterList.Count; i++)
-                    {
-                        if (rnd.Next(0, 10 - fighterList[i].Initiative) == rnd.Next(0, 10 - fighterList[i].Initiative))
-                        {
-                            roundOwnerIndex = i;
-                            isInit = true;
 
-                        }
+                for (int fighter = 0; fighter < fighterList.Count; fighter++)
+                {
+                    do
+                    {
+                        opponentIndex = rnd.Next(0, fighterList.Count);
                     }
+                    while (opponentIndex == fighter);
+
+                    Console.WriteLine($"\nRound {round++}");
+                    Console.WriteLine($"{fighterList[fighter].Name} VS {fighterList[opponentIndex].Name}");
+                    if (FightAndCheckIfOpponentDead(fighterList[fighter], fighterList[opponentIndex]))
+                    {
+                        Console.ForegroundColor = ConsoleColor.Red;
+                        Console.WriteLine($"\n{fighterList[opponentIndex].Name} die in a battle\n");
+                        Console.ResetColor();
+                        fighterList.RemoveAt(opponentIndex);
+                    };
                 }
 
-                while (true)
-                {
-                    opponentIndex = rnd.Next(0, fighterList.Count);
-                    if (opponentIndex != roundOwnerIndex)
-                    {
-                        break;
-                    }
-                }
-
-                Console.WriteLine($"\nRound {round++}");
-                Console.WriteLine($"{fighterList[roundOwnerIndex].Name} VS {fighterList[opponentIndex].Name}");
-                if (FightAndCheckIfOpponentDead(fighterList[roundOwnerIndex], fighterList[opponentIndex]))
-                {
-                    Console.ForegroundColor = ConsoleColor.Red;
-                    Console.WriteLine($"\n{fighterList[opponentIndex].Name} die in a battle\n");
-                    Console.ResetColor();
-                    fighterList.RemoveAt(opponentIndex);
-                };
             }
             throw new UnreachableException();
         }
