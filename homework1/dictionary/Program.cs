@@ -2,7 +2,7 @@
 
 internal class Programm
 {
-    private static Dictionary<string, string> Dictionary { get; set; } = new();
+    private static Dictionary<string, string> _dictionary { get; set; } = new();
     public static int Main()
     {
         while (true)
@@ -11,7 +11,9 @@ internal class Programm
 
             string option = Console.ReadLine().Trim();
             if (option == "0") break;
-            bool emptyDictonaryCondition = Dictionary.Count == 0 && (option == "2" || option == "3" || option == "4" || option == "6");
+
+            HashSet<string> optionCollection = new() {"2", "3", "4", "6"};
+            bool emptyDictonaryCondition = !_dictionary.Any() && optionCollection.Contains(option);
 
             if (emptyDictonaryCondition)
             {
@@ -20,14 +22,14 @@ internal class Programm
                 continue;
             }
 
-            switchOption(option);
+            SwitchOption(option);
 
         }
 
         return 1;
     }
 
-    public static void switchOption(string option) 
+    private static void SwitchOption(string option) 
     {
             switch (option)
             {
@@ -58,7 +60,7 @@ internal class Programm
             }
     }
 
-    public static void MenuText()
+    private static void MenuText()
     {
         Console.WriteLine($"Выберите одну из команд:");
         Console.WriteLine("1 - AddTranslation");
@@ -70,15 +72,15 @@ internal class Programm
         Console.WriteLine("0 - Exit");
     }
 
-    public static void ShowAllDictionary()
+    private static void ShowAllDictionary()
     {
-        foreach (KeyValuePair<string, string> currentWord in Dictionary)
+        foreach (KeyValuePair<string, string> currentWord in _dictionary)
         {
             Console.WriteLine($"{currentWord.Key} - {currentWord.Value}");
         }
     }
 
-    public static void AddTranslationFromFile()
+    private static void AddTranslationFromFile()
     {
         while (true)
         {
@@ -99,7 +101,7 @@ internal class Programm
         }
     }
 
-    public static string GetUserInputFileName()
+    private static string GetUserInputFileName()
     {
         Console.WriteLine("Введите имя файла. Для выхода введите 0");
         string pathToFile = Console.ReadLine();
@@ -110,27 +112,22 @@ internal class Programm
         return null;
     }
 
-    public static void LoadDictionaryFromFile(string pathToFile)
+    private static void LoadDictionaryFromFile(string pathToFile)
     {
         try
         {
-            using (StreamReader reader = new StreamReader(pathToFile))
+            StreamReader reader = new StreamReader(pathToFile);
+            string text = reader.ReadLine();
+            while (text != null)
             {
-                string text = reader.ReadLine();
-                while (text != null)
+                string[] words = text.Split(' ');
+                if (words.Length == 2 && !_dictionary.ContainsKey(words[0]))
                 {
-                    string[] words = text.Split(' ');
-                    if (words.Length == 2)
-                    {
-                        if (!Dictionary.ContainsKey(words[0]))
-                        {
-                            Dictionary.Add(words[0], words[1]);
-                        }
-                    }
-                    text = reader.ReadLine();
+                    _dictionary.Add(words[0], words[1]);
                 }
-                Console.WriteLine("Данные из файла успешно загружены");
+                text = reader.ReadLine();
             }
+            Console.WriteLine("Данные из файла успешно загружены");
         }
         catch (Exception ex)
         {
@@ -138,7 +135,7 @@ internal class Programm
         }
     }
 
-    public static void ChangeTranslation()
+    private static void ChangeTranslation()
     {
         while (true)
         {
@@ -148,11 +145,11 @@ internal class Programm
             {
                 break;
             }
-            else if (Dictionary.ContainsKey(word))
+            else if (_dictionary.ContainsKey(word))
             {
                 Console.Write("Введите новый перевод: ");
                 string newEngWord = Console.ReadLine();
-                Dictionary[word] = newEngWord;
+                _dictionary[word] = newEngWord;
                 Console.WriteLine("Перевод изменен");
             }
             else
@@ -162,50 +159,50 @@ internal class Programm
         }
     }
 
-    public static void Translate()
-{
-    while (true)
+    private static void Translate()
     {
-        Console.WriteLine("На какой язык вы хотите перевести слово? Для выхода 0");
-        Console.WriteLine("1 - Русский");
-        Console.WriteLine("2 - Английский");
-        string language = Console.ReadLine();
-
-        if (language == "0")
+        while (true)
         {
-            break;
-        }
+            Console.WriteLine("На какой язык вы хотите перевести слово? Для выхода 0");
+            Console.WriteLine("1 - Русский");
+            Console.WriteLine("2 - Английский");
+            string language = Console.ReadLine();
 
-        if (language != "1" && language != "2")
-        {
-            Console.WriteLine("Ошибка");
-            continue;
-        }
+            if (language == "0")
+            {
+                break;
+            }
 
-        Console.WriteLine("Введите слово");
-        string word = Console.ReadLine();
+            if (language != "1" && language != "2")
+            {
+                Console.WriteLine("Ошибка");
+                continue;
+            }
 
-        if (language == "2" && Dictionary.ContainsKey(word))
-        {
-            Console.WriteLine($"{word} - {Dictionary[word]}");
-            Console.ReadLine();
-        }
-        else if (language == "1" && Dictionary.ContainsValue(word))
-        {
-            string matchingWord = Dictionary.FirstOrDefault(currentWord => currentWord.Value == word).Key;
-            Console.WriteLine($"{word} - {matchingWord}");
-            Console.ReadLine();
-        }
-        else
-        {
-            Console.WriteLine("Слово по вашему запросу не найдено в словаре");
-        }
+            Console.WriteLine("Введите слово");
+            string word = Console.ReadLine();
 
+            if (language == "2" && _dictionary.ContainsKey(word))
+            {
+                Console.WriteLine($"{word} - {_dictionary[word]}");
+                Console.ReadLine();
+            }
+            else if (language == "1" && _dictionary.ContainsValue(word))
+            {
+                string matchingWord = _dictionary.FirstOrDefault(currentWord => currentWord.Value == word).Key;
+                Console.WriteLine($"{word} - {matchingWord}");
+                Console.ReadLine();
+            }
+            else
+            {
+                Console.WriteLine("Слово по вашему запросу не найдено в словаре");
+            }
+
+        }
     }
-}
 
 
-    public static void RemoveTranslation()
+    private static void RemoveTranslation()
     {
         while (true)
         {
@@ -215,9 +212,9 @@ internal class Programm
             {
                 break;
             }
-            else if (Dictionary.ContainsKey(word))
+            else if (_dictionary.ContainsKey(word))
             {
-                Dictionary[word] = "Перевод отсутствует";
+                _dictionary[word] = "Перевод отсутствует";
                 Console.WriteLine("Перевод слова удален из словаря");
             }
             else
@@ -227,7 +224,7 @@ internal class Programm
         }
     }
 
-    public static void AddTranslation()
+    private static void AddTranslation()
     {
         while (true) 
         {
@@ -238,22 +235,21 @@ internal class Programm
             {
                 break;
             }
-            else if (words.Length == 2)
-            {
-                if (Dictionary.ContainsKey(words[0]))
-                {
-                    Console.WriteLine("Слово уже находится в соваре");
-                }
-                else
-                {
-                    Dictionary.Add(words[0], words[1]);
-                    Console.WriteLine("Слово и перевод добавлены в словарь");
-                }
 
+            if (words.Length != 2)
+            {
+                Console.WriteLine("Ошибка ввода");
+                continue;
+            }
+
+            if (_dictionary.ContainsKey(words[0]))
+            {
+                Console.WriteLine("Слово уже находится в словаре");
             }
             else
             {
-                Console.WriteLine("Ошибка ввода");
+                _dictionary.Add(words[0], words[1]);
+                Console.WriteLine("Слово и перевод добавлены в словарь");
             }
         }
     }
