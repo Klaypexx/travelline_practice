@@ -13,7 +13,8 @@
         try
         {
             amount = int.Parse(amountOfProduct);
-        } catch
+        } 
+        catch
         {
             Console.WriteLine($"Входная строка была введена в неправильном формате.");
             return;
@@ -28,8 +29,14 @@
         DateTime currentDate = DateTime.Now;
         DateTime deliveryDate = currentDate.AddDays(3);
 
-        string confirmationText = $"Здравствуйте, {userName}, вы заказали {amount} {productName} на адрес {address}, все верно?\nДля подтверждения напишите - да";
-        string deliveryInformationText = $"{userName}!\nВаш заказ {productName} в количестве {amount} оформлен! \nОжидайте доставку по адресу {address} к {deliveryDate}";
+        string confirmationText = $"Здравствуйте, {userName},";
+        confirmationText += $" вы заказали {amount} {productName} ";
+        confirmationText += $"на адрес {address}, все верно?\n";
+        confirmationText += $"Для подтверждения напишите - да";
+
+        string deliveryInformationText = $"{userName}!\n";
+        deliveryInformationText += $"Ваш заказ {productName} в количестве {amount} оформлен! \n";
+        deliveryInformationText += $"Ожидайте доставку по адресу {address} к {deliveryDate}";
 
         Console.WriteLine(confirmationText);
         string isCorrect = Console.ReadLine().Trim().ToLower();
@@ -37,7 +44,8 @@
         if (isCorrect == "да")
         {
             Console.WriteLine(deliveryInformationText);
-        } else
+        } 
+        else
         {
             Console.WriteLine("Заказ отменен");
         }
