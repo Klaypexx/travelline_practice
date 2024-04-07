@@ -74,7 +74,11 @@ public static class AccommodationsProcessor
 
                 BookCommand bookCommand = new(_bookingService, bookingDto);
                 bookCommand.Execute();
-                _executedCommands.Add(++s_commandIndex, bookCommand);
+
+                if (startDate >= DateTime.Now) //переменная _executedCommands будет увеличиваться, если startDate >= DateTime.Now
+                {
+                    _executedCommands.Add(++s_commandIndex, bookCommand);
+                }
                 Console.WriteLine("Booking command run is successful.");
                 break;
 
