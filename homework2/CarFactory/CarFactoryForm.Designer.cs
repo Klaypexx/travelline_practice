@@ -220,7 +220,7 @@
             confirmButton.TabIndex = 10;
             confirmButton.Text = "Confirm";
             confirmButton.UseVisualStyleBackColor = true;
-            confirmButton.Click += button1_Click_1;
+            confirmButton.Click += buttonConfirm;
             // 
             // CarFactoryForm
             // 
@@ -233,7 +233,7 @@
             Name = "CarFactoryForm";
             StartPosition = FormStartPosition.CenterScreen;
             Text = "CarFactory";
-            Load += Form1_Load;
+            Load += CarForm;
             BrandBox.ResumeLayout(false);
             bodyTypeBox.ResumeLayout(false);
             colorBox.ResumeLayout(false);

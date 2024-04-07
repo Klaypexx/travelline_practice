@@ -1,10 +1,10 @@
-using CarFactory.Models.BodyType;
-using CarFactory.Models.CarFactory;
-using CarFactory.Models.CarModel;
-using CarFactory.Models.Color;
-using CarFactory.Models.Engine;
-using CarFactory.Models.SteeringPosition;
-using CarFactory.Models.Transmission;
+using CarFactory.Models.BodyTypes;
+using CarFactory.Models.CarFactories;
+using CarFactory.Models.Brands;
+using CarFactory.Models.Colors;
+using CarFactory.Models.Engines;
+using CarFactory.Models.SteeringPositions;
+using CarFactory.Models.Transmissions;
 
 namespace CarFactory
 {
@@ -16,7 +16,7 @@ namespace CarFactory
             this.Size = new Size(800, 600);
         }
 
-        private void Form1_Load(object sender, EventArgs e)
+        private void CarForm(object sender, EventArgs e)
         {
             carBrand.SelectedIndex = 0;
             carBodyType.SelectedIndex = 0;
@@ -26,7 +26,7 @@ namespace CarFactory
             carSteeringPosition.SelectedIndex = 0;
         }
 
-        private void button1_Click_1(object sender, EventArgs e)
+        private void buttonConfirm(object sender, EventArgs e)
         {
             ICar car = PickConfigurations();
             string carCharacteristicsText = CarCharacteristicsMessage(car);
@@ -35,7 +35,15 @@ namespace CarFactory
 
         private string CarCharacteristicsMessage(ICar car)
         {
-            string carCharacteristicsText = $"Your configuration:\nBrand - {car.Brand.Name}\nEngine - {car.Engine.Name}\nMaximum speed - {car.Engine.MaxSpeed} km\\h\nGears - {car.Engine.MaxGears}\nBody type - {car.BodyType.Name}\nBody color - {car.Color.Name}\nThe steering wheel position - {car.SteeringPosition.Name}\nTransmission - {car.Transmission.Name}";
+            string carCharacteristicsText = $"Your configuration:\n";
+            carCharacteristicsText += $"Brand - {car.Brand.Name}\n";
+            carCharacteristicsText += $"Engine - {car.Engine.Name}\n";
+            carCharacteristicsText += $"Maximum speed - {car.Engine.MaxSpeed} km\\h\n";
+            carCharacteristicsText += $"Gears - {car.Engine.MaxGears}\n";
+            carCharacteristicsText += $"Body type - {car.BodyType.Name}\n";
+            carCharacteristicsText += $"Body color - {car.Color.Name}\n";
+            carCharacteristicsText += $"The steering wheel position - {car.SteeringPosition.Name}\n";
+            carCharacteristicsText += $"Transmission - {car.Transmission.Name}";
             return carCharacteristicsText;
         }
 

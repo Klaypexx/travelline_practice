@@ -1,10 +1,9 @@
-﻿using CarFactory.Models.BodyType;
-using CarFactory.Models.Brand;
-using CarFactory.Models.CarModel;
-using CarFactory.Models.Color;
-using CarFactory.Models.Engine;
-using CarFactory.Models.SteeringPosition;
-using CarFactory.Models.Transmission;
+﻿using CarFactory.Models.BodyTypes;
+using CarFactory.Models.Brands;
+using CarFactory.Models.Colors;
+using CarFactory.Models.Engines;
+using CarFactory.Models.SteeringPositions;
+using CarFactory.Models.Transmissions;
 
 namespace CarFactory
 {
