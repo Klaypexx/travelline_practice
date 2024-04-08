@@ -53,11 +53,11 @@ public static class AccommodationsProcessor
                 //Добавил CultureInfo.InvariantCulture, без него выдается ошибка при парсинге строкового типа даты
                 //Добавил условие для некорректной даты
 
-                if (!DateTime.TryParse(parts[3], CultureInfo.InvariantCulture, out DateTime startDate)) 
+                if (!DateTime.TryParse(parts[3], out DateTime startDate)) 
                 {
                     throw new ArgumentException("Date of the book beginning is incorrect");
                 }
-                if (!DateTime.TryParse(parts[4], CultureInfo.InvariantCulture, out DateTime endDate))
+                if (!DateTime.TryParse(parts[4], out DateTime endDate))
                 {
                     throw new ArgumentException("Date of the book ending is incorrect");
                 }
