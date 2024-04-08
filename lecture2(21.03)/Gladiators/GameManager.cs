@@ -5,60 +5,91 @@ namespace Fighters
 {
     public class GameManager
     {
-        public Fighter GetWinner(List<Fighter> fighterList)
+        private List<Fighter> _fighterList;
+        private int _opponentIndex = -1;
+        private int _round = 1;
+
+        public GameManager(List<Fighter> fighterList)
         {
+            _fighterList = fighterList;
+        }
 
-            Console.WriteLine("All Fighters:");
-            foreach (Fighter fighter in fighterList)
-            {
-                Console.Write($"{fighter.Name} ");
-            }
-            Console.WriteLine();
+        public Fighter GetWinner()
+        {
+            ShowAllFighters();
 
-            Random rnd = new Random();
-
-            int opponentIndex;
-            int round = 1;
-
-            fighterList = fighterList.OrderByDescending(f => f.Initiative).ToList();
+            _fighterList = _fighterList.OrderByDescending(f => f.Initiative).ToList();
 
             while (true)
             {
-                if (fighterList.Count == 1)
+                if (_fighterList.Count == 1)
                 {
-                    return fighterList[0];
-                } 
-
-                for (int fighter = 0; fighter < fighterList.Count; fighter++)
-                {
-                    do
-                    {
-                        opponentIndex = rnd.Next(0, fighterList.Count);
-                    }
-                    while (opponentIndex == fighter);
-
-                    Console.WriteLine($"\nRound {round++}");
-                    Console.WriteLine($"{fighterList[fighter].Name} VS {fighterList[opponentIndex].Name}");
-                    if (FightAndCheckIfOpponentDead(fighterList[fighter], fighterList[opponentIndex]))
-                    {
-                        Console.ForegroundColor = ConsoleColor.Red;
-                        Console.WriteLine($"\n{fighterList[opponentIndex].Name} die in a battle\n");
-                        Console.ResetColor();
-                        fighterList.RemoveAt(opponentIndex);
-                    };
+                    return _fighterList[0];
                 }
 
+                FightRound();
             }
             throw new UnreachableException();
         }
 
-        public bool FightAndCheckIfOpponentDead(IFighter roundOwner, IFighter opponent)
+        private void ShowAllFighters()
+        {
+            Console.WriteLine("All Fighters:");
+            foreach (Fighter fighter in _fighterList)
+            {
+                Console.Write($"{fighter.Name} ");
+            }
+            Console.WriteLine();
+        }
+
+        private void FightRound()
+        {
+            for (int fighter = 0; fighter < _fighterList.Count; fighter++)
+            {
+                FindOpponent(fighter);
+
+                Console.WriteLine($"\nRound {_round++}");
+                Console.WriteLine($"{_fighterList[fighter].Name} VS {_fighterList[_opponentIndex].Name}");
+
+                Fight(_fighterList[fighter], _fighterList[_opponentIndex]);
+
+                if (_fighterList[_opponentIndex].CheckIsDead())
+                {
+                    Console.ForegroundColor = ConsoleColor.Red;
+                    Console.WriteLine($"\n{_fighterList[_opponentIndex].Name} die in a battle\n");
+                    Console.ResetColor();
+                    _fighterList.RemoveAt(_opponentIndex);
+                };
+            }
+        }
+
+        private void FindOpponent(int fighter)
+        {
+            Random rnd = new Random();
+            do
+            {
+                _opponentIndex = rnd.Next(0, _fighterList.Count);
+            }
+            while (_opponentIndex == fighter);
+        }
+
+        private string GetRoundStat(double damage, IFighter opponent)
+        {
+            string roundStat = $"Fighter {opponent.Name} get {damage} damage.\n";
+            roundStat += $"The armor resist {opponent.MaxArmor} damage.\n";
+            roundStat += $"Now has {opponent.CurrentHealth} health";
+
+            return roundStat;
+        }
+
+        private void Fight(IFighter roundOwner, IFighter opponent)
         {
             double damage = roundOwner.GetDamage();
             opponent.TakeDamage(damage);
 
-            Console.WriteLine($"Fighter {opponent.Name} get {damage} damage.\nThe armor resist {opponent.MaxArmor} damage.\nNow has {opponent.CurrentHealth} health");
-            return opponent.CurrentHealth < 1;
+            string roundStat = GetRoundStat(damage, opponent);
+
+            Console.WriteLine(roundStat);
         }
     }
 }

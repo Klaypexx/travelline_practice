@@ -2,6 +2,7 @@
 using Gladiators.Models.Weapons;
 using Gladiators.Models.Armors;
 using Gladiators.Models.Archetype;
+using System.ComponentModel;
 
 namespace Gladiators.Models.Fighters
 {
@@ -64,6 +65,10 @@ namespace Gladiators.Models.Fighters
             {
                 CurrentHealth = 0;
             }
+        }
+        public bool CheckIsDead()
+        {
+            return CurrentHealth < 1;
         }
         private string GetDamageInformation(double original, double multiply, bool critical, double damage)
         {

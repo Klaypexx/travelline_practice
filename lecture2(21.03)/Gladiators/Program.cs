@@ -4,33 +4,62 @@ namespace Fighters
 {
     public class Program
     {
+        private static int _fightersCount;
         public static void Main()
         {
             Console.WriteLine("Welcome to the Gladiators Battle!");
 
-            Console.WriteLine("Choose fighters count:");
-
-            string fightersCountText = Console.ReadLine();
-            int fightersCount = 0;
-
             try
             {
-                fightersCount = int.Parse(fightersCountText);
-                if (fightersCount <= 0)
-                {
-                    Console.WriteLine("Invalid input value. It must be greater than 0");
-                    return;
-                }
+                SetFightersCount();
             }
-            catch (FormatException e)
+            catch (Exception e)
             {
-                Console.WriteLine(e);
+                Console.WriteLine(e.Message);
                 return;
             }
 
             List<Fighter> fightersList = new();
 
-            for (int i = 0; i < fightersCount; i++)
+            CreateFighters(fightersList);
+
+            GameManager master = new GameManager(fightersList);
+            string name = master.GetWinner().Name;
+
+            ShowWinnerName(name);
+        }
+
+        private static void ShowWinnerName(string name)
+        {
+            Console.ForegroundColor = ConsoleColor.Yellow;
+            Console.WriteLine($"The winner is {name} ");
+            Console.ResetColor();
+        }
+
+        private static void SetFightersCount()
+        {
+            Console.WriteLine("Choose fighters count:");
+
+            string fightersCountText = Console.ReadLine();
+
+            try
+            {
+                _fightersCount = int.Parse(fightersCountText);
+            }
+            catch (FormatException)
+            {
+                throw new Exception("Incorrect input format. There must be a number.");
+            }
+
+            if (_fightersCount <= 0)
+            {
+                throw new Exception("Invalid input value. It must be greater than 0.");
+            }
+        }
+
+        private static void CreateFighters(List<Fighter> fightersList)
+        {
+            for (int i = 0; i < _fightersCount; i++)
             {
                 Console.WriteLine($"Create fighter {i + 1}");
                 fightersList.Add(FighterFactory.NewFighter());
@@ -44,13 +73,6 @@ namespace Fighters
                 }
                 Console.ReadLine();
             }
-
-            GameManager master = new GameManager();
-            Fighter winner = master.GetWinner(fightersList);
-
-            Console.ForegroundColor = ConsoleColor.Yellow;
-            Console.WriteLine($"The winner is {winner.Name} ");
-            Console.ResetColor();
         }
     }
 }
