@@ -126,8 +126,16 @@ public static class AccommodationsProcessor
                     Console.WriteLine("Invalid arguments for 'search'. Expected format: 'search <StartDate> <EndDate> <CategoryName>'");
                     return;
                 }
-                startDate = DateTime.Parse(parts[1], CultureInfo.InvariantCulture);
-                endDate = DateTime.Parse(parts[2], CultureInfo.InvariantCulture);
+
+                if (!DateTime.TryParse(parts[1], out startDate))
+                {
+                    throw new ArgumentException("Date of the book beginning is incorrect");
+                }
+                if (!DateTime.TryParse(parts[2], out endDate))
+                {
+                    throw new ArgumentException("Date of the book ending is incorrect");
+                }
+
                 string categoryName = parts[3];
                 SearchBookingsCommand searchCommand = new(_bookingService, startDate, endDate, categoryName);
                 searchCommand.Execute();
