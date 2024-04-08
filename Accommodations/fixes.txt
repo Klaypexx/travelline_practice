@@ -13,3 +13,6 @@ Book.cs:
 FindBookingByIdCommand.cs:
 
 1) 11 Добавил переменную в текст для правильного вывода информации booking.RoomCategory.Name 
+
+Тесты
+https://1drv.ms/w/c/e3c82e2b3fc56cfb/EWkChHfPQZJDvoPub-mJtL8BYq8foBERsPru6CKhuMtCjg?e=41ygQt
