@@ -14,6 +14,6 @@ namespace Gladiators.Models.Fighters
         public void TakeDamage(double damage);
         public double GetDamage();
         public string GetFigheterStat();
-        public bool CheckIsDead();
+        public bool IsDead();
     }
 }

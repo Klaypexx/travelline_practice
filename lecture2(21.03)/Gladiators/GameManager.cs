@@ -27,7 +27,7 @@ namespace Fighters
                     return _fighterList[0];
                 }
 
-                FightRound();
+                Fight();
             }
             throw new UnreachableException();
         }
@@ -42,28 +42,33 @@ namespace Fighters
             Console.WriteLine();
         }
 
-        private void FightRound()
+        private void Fight()
         {
             for (int fighter = 0; fighter < _fighterList.Count; fighter++)
             {
-                FindOpponent(fighter);
+                SetOpponent(fighter);
 
                 Console.WriteLine($"\nRound {_round++}");
                 Console.WriteLine($"{_fighterList[fighter].Name} VS {_fighterList[_opponentIndex].Name}");
 
-                Fight(_fighterList[fighter], _fighterList[_opponentIndex]);
+                RoundFight(_fighterList[fighter], _fighterList[_opponentIndex]);
 
-                if (_fighterList[_opponentIndex].CheckIsDead())
+                if (_fighterList[_opponentIndex].IsDead())
                 {
-                    Console.ForegroundColor = ConsoleColor.Red;
-                    Console.WriteLine($"\n{_fighterList[_opponentIndex].Name} die in a battle\n");
-                    Console.ResetColor();
+                    FighterDieText();
                     _fighterList.RemoveAt(_opponentIndex);
                 };
             }
         }
 
-        private void FindOpponent(int fighter)
+        private void FighterDieText()
+        {
+            Console.ForegroundColor = ConsoleColor.Red;
+            Console.WriteLine($"\n{_fighterList[_opponentIndex].Name} die in a battle\n");
+            Console.ResetColor();
+        }
+
+        private void SetOpponent(int fighter)
         {
             Random rnd = new Random();
             do
@@ -82,7 +87,7 @@ namespace Fighters
             return roundStat;
         }
 
-        private void Fight(IFighter roundOwner, IFighter opponent)
+        private void RoundFight(IFighter roundOwner, IFighter opponent)
         {
             double damage = roundOwner.GetDamage();
             opponent.TakeDamage(damage);

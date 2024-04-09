@@ -12,23 +12,25 @@ namespace Gladiators.Models.Fighters
         public double CurrentHealth { get; private set; }
         public int Initiative => _race.Initiative + _archetype.Initiative;
         public string Name { get; }
-        private int MaxHealth => _race.Health + _archetype.Health;
+
+        private int _maxHealth;
         private IRace _race;
         private IWeapon _weapon;
         private IArmor _armor;
         private IArchetype _archetype;
-        public Fighter(string name, IRace race, IArchetype fclass, IWeapon weapon, IArmor armor)
+        public Fighter(string name, IRace race, IArchetype archetype, IWeapon weapon, IArmor armor)
         {
-            _archetype = fclass;
+            _archetype = archetype;
             Name = name;
             _race = race;
             _weapon = weapon;
             _armor = armor;
-            CurrentHealth = MaxHealth;
+            _maxHealth = _race.Health + _archetype.Health;
+            CurrentHealth = _maxHealth;
         }
         public string GetFigheterStat()
         {
-            string fighterStatText = $"{Name} characteristics\nThe maximum health indicator - {MaxHealth}\n";
+            string fighterStatText = $"{Name} characteristics\nThe maximum health indicator - {_maxHealth}\n";
             fighterStatText += $"The maximum armor indicator - {MaxArmor}\nInitiative - {Initiative}\n";
             fighterStatText += $"Race - {_race.Name}\nClass - {_archetype.Name}\n";
             fighterStatText += $"Weapon - {_weapon.Name}\nArmor - {_armor.Name}";
@@ -66,7 +68,7 @@ namespace Gladiators.Models.Fighters
                 CurrentHealth = 0;
             }
         }
-        public bool CheckIsDead()
+        public bool IsDead()
         {
             return CurrentHealth < 1;
         }
