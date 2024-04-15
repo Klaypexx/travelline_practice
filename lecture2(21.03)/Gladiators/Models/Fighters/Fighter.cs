@@ -18,6 +18,7 @@ namespace Gladiators.Models.Fighters
         private IWeapon _weapon;
         private IArmor _armor;
         private IArchetype _archetype;
+
         public Fighter(string name, IRace race, IArchetype archetype, IWeapon weapon, IArmor armor)
         {
             _archetype = archetype;
@@ -28,6 +29,7 @@ namespace Gladiators.Models.Fighters
             _maxHealth = _race.Health + _archetype.Health;
             CurrentHealth = _maxHealth;
         }
+
         public string GetFigheterStat()
         {
             string fighterStatText = $"{Name} characteristics\nThe maximum health indicator - {_maxHealth}\n";
@@ -68,10 +70,12 @@ namespace Gladiators.Models.Fighters
                 CurrentHealth = 0;
             }
         }
+
         public bool IsDead()
         {
             return CurrentHealth < 1;
         }
+
         private string GetDamageInformation(double original, double multiply, bool critical, double damage)
         {
             string damageInformationText = $"Default damage: {original}\n";
@@ -94,6 +98,7 @@ namespace Gladiators.Models.Fighters
 
             return damageInformationText;
         }
+
         private double GetSwingPower()
         {
             Random rnd = new Random();
@@ -111,6 +116,6 @@ namespace Gladiators.Models.Fighters
                 return true;
             }
             return false;
-        }
+        }   
     }
 }

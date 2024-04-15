@@ -10,7 +10,7 @@ namespace Fighters
     {
         public static Fighter NewFighter()
         {
-            string fightername = Createname();
+            string fightername = CreateName();
 
             List<IRace> races = new() { new Human(), new Lizard() };
             IRace fighterRace = PickOption("race", races);
@@ -27,7 +27,7 @@ namespace Fighters
             return new Fighter(fightername, fighterRace, fighterArchetype, fighterWeapon, fighterArmor);
         }
 
-        private static string Createname()
+        private static string CreateName()
         {
             while (true)
             {

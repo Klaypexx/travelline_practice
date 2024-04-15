@@ -55,13 +55,13 @@ namespace Fighters
 
                 if (_fighterList[_opponentIndex].IsDead())
                 {
-                    FighterDieText();
+                    ShowFighterDieInfo();
                     _fighterList.RemoveAt(_opponentIndex);
                 };
             }
         }
 
-        private void FighterDieText()
+        private void ShowFighterDieInfo()
         {
             Console.ForegroundColor = ConsoleColor.Red;
             Console.WriteLine($"\n{_fighterList[_opponentIndex].Name} die in a battle\n");
