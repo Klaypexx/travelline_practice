@@ -1,4 +1,4 @@
-using System.Globalization;
+п»їusing System.Globalization;
 using Accommodations.Commands;
 using Accommodations.Dto;
 
@@ -50,8 +50,8 @@ public static class AccommodationsProcessor
 
                 CurrencyDto currency = (CurrencyDto) Enum.Parse(typeof(CurrencyDto), parts[5], true);
 
-                //Добавил CultureInfo.InvariantCulture, без него выдается ошибка при парсинге строкового типа даты
-                //Добавил условие для некорректной даты
+                //Р”РѕР±Р°РІРёР» CultureInfo.InvariantCulture, Р±РµР· РЅРµРіРѕ РІС‹РґР°РµС‚СЃСЏ РѕС€РёР±РєР° РїСЂРё РїР°СЂСЃРёРЅРіРµ СЃС‚СЂРѕРєРѕРІРѕРіРѕ С‚РёРїР° РґР°С‚С‹
+                //Р”РѕР±Р°РІРёР» СѓСЃР»РѕРІРёРµ РґР»СЏ РЅРµРєРѕСЂСЂРµРєС‚РЅРѕР№ РґР°С‚С‹
 
                 if (!DateTime.TryParse(parts[3], out DateTime startDate)) 
                 {
@@ -75,7 +75,7 @@ public static class AccommodationsProcessor
                 BookCommand bookCommand = new(_bookingService, bookingDto);
                 bookCommand.Execute();
 
-                if (startDate >= DateTime.Now) //переменная _executedCommands будет увеличиваться, если startDate >= DateTime.Now
+                if (startDate >= DateTime.Now) //РїРµСЂРµРјРµРЅРЅР°СЏ _executedCommands Р±СѓРґРµС‚ СѓРІРµР»РёС‡РёРІР°С‚СЊСЃСЏ, РµСЃР»Рё startDate >= DateTime.Now
                 {
                     _executedCommands.Add(++s_commandIndex, bookCommand);
                 }
@@ -97,7 +97,7 @@ public static class AccommodationsProcessor
                 break;
 
             case "undo":
-                //Добавил проверку на то, что количество команд будет 0
+                //Р”РѕР±Р°РІРёР» РїСЂРѕРІРµСЂРєСѓ РЅР° С‚Рѕ, С‡С‚Рѕ РєРѕР»РёС‡РµСЃС‚РІРѕ РєРѕРјР°РЅРґ Р±СѓРґРµС‚ 0
                 if (s_commandIndex == 0)
                 {
                     Console.WriteLine("The command history is empty");
