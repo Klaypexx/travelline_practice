@@ -39,7 +39,6 @@ public static class AccommodationsProcessor
     {
         string[] parts = input.Split(' ');
         string commandName = parts[0];
-
         switch (commandName)
         {
             case "book":
@@ -51,18 +50,35 @@ public static class AccommodationsProcessor
 
                 CurrencyDto currency = (CurrencyDto) Enum.Parse(typeof(CurrencyDto), parts[5], true);
 
+                //Добавил CultureInfo.InvariantCulture, без него выдается ошибка при парсинге строкового типа даты
+                //Добавил условие для некорректной даты
+
+                if (!DateTime.TryParse(parts[3], out DateTime startDate)) 
+                {
+                    throw new ArgumentException("Date of the book beginning is incorrect");
+                }
+                if (!DateTime.TryParse(parts[4], out DateTime endDate))
+                {
+                    throw new ArgumentException("Date of the book ending is incorrect");
+                }
+
+
                 BookingDto bookingDto = new()
                 {
                     UserId = int.Parse(parts[1]),
                     Category = parts[2],
-                    StartDate = DateTime.Parse(parts[3]),
-                    EndDate = DateTime.Parse(parts[4]),
+                    StartDate = startDate,
+                    EndDate = endDate,
                     Currency = currency,
                 };
 
                 BookCommand bookCommand = new(_bookingService, bookingDto);
                 bookCommand.Execute();
-                _executedCommands.Add(++s_commandIndex, bookCommand);
+
+                if (startDate >= DateTime.Now) //переменная _executedCommands будет увеличиваться, если startDate >= DateTime.Now
+                {
+                    _executedCommands.Add(++s_commandIndex, bookCommand);
+                }
                 Console.WriteLine("Booking command run is successful.");
                 break;
 
@@ -81,6 +97,12 @@ public static class AccommodationsProcessor
                 break;
 
             case "undo":
+                //Добавил проверку на то, что количество команд будет 0
+                if (s_commandIndex == 0)
+                {
+                    Console.WriteLine("The command history is empty");
+                    return;
+                }
                 _executedCommands[s_commandIndex].Undo();
                 _executedCommands.Remove(s_commandIndex);
                 s_commandIndex--;
@@ -104,8 +126,16 @@ public static class AccommodationsProcessor
                     Console.WriteLine("Invalid arguments for 'search'. Expected format: 'search <StartDate> <EndDate> <CategoryName>'");
                     return;
                 }
-                DateTime startDate = DateTime.Parse(parts[1]);
-                DateTime endDate = DateTime.Parse(parts[2]);
+
+                if (!DateTime.TryParse(parts[1], out startDate))
+                {
+                    throw new ArgumentException("Date of the book beginning is incorrect");
+                }
+                if (!DateTime.TryParse(parts[2], out endDate))
+                {
+                    throw new ArgumentException("Date of the book ending is incorrect");
+                }
+
                 string categoryName = parts[3];
                 SearchBookingsCommand searchCommand = new(_bookingService, startDate, endDate, categoryName);
                 searchCommand.Execute();

@@ -23,6 +23,16 @@ public class BookingService : IBookingService
 
     public Booking Book(int userId, string categoryName, DateTime startDate, DateTime endDate, Currency currency)
     {
+        if (endDate <= DateTime.Now)    //Условие при котором конечная дата не может быть меньшще или равной текущей.
+        {
+            throw new ArgumentException("The end date cannot be equal to or less than the current date");
+        }
+
+        if (startDate == endDate)
+        {
+            throw new ArgumentException("The start date of the booking cannot be equal to the end date of the booking"); //Дата начала бронирования не может равняться дате конца бронирования
+        }
+
         if (endDate < startDate)
         {
             throw new ArgumentException("End date cannot be earlier than start date");
@@ -85,11 +95,6 @@ public class BookingService : IBookingService
         category.AvailableRooms++;
     }
 
-    private static decimal CalculateDiscount(int userId)
-    {
-        return 0.1m;
-    }
-
     public Booking? FindBookingById(Guid bookingId)
     {
         return _bookings.FirstOrDefault(b => b.Id == bookingId);
@@ -118,11 +123,17 @@ public class BookingService : IBookingService
             throw new ArgumentException("Start date cannot be earlier than now date");
         }
 
-        int daysBeforeArrival = (DateTime.Now - booking.StartDate).Days;
+        int daysBeforeArrival = (booking.StartDate - DateTime.Now).Days + 1; //Поменял местами startDate и Now и прибавил + 1 день для правильно высчитывания.
+                                                                             //Без + 1 у нас бы отмена за 2 дня до въезда равнялась 1 и соответственно штраф
+                                                                             //высчитывался бы неправильно
 
-        return 5000.0m / daysBeforeArrival;
+        return Math.Round(5000.0m / daysBeforeArrival, 0);
     }
 
+    private static decimal CalculateDiscount() //переменная userId не нужна. Опустил приватый метод ниже по коду.
+    {
+        return 0.1m;
+    }
     private static decimal GetCurrencyRate(Currency currency)
     {
         decimal currencyRate = 1m;
@@ -140,7 +151,7 @@ public class BookingService : IBookingService
     private static decimal CalculateBookingCost(decimal baseRate, int days, int userId, decimal currencyRate)
     {
         decimal cost = baseRate * days;
-        decimal totalCost = cost - cost * CalculateDiscount(userId) * currencyRate;
+        decimal totalCost = (cost - (cost * CalculateDiscount())) / currencyRate; //Изменил рассчет на правильный
         return totalCost;
     }
 }
