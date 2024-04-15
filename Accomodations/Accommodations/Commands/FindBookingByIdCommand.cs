@@ -1,4 +1,4 @@
-using Accommodations.Models;
+п»їusing Accommodations.Models;
 
 namespace Accommodations.Commands;
 
@@ -8,7 +8,7 @@ public class FindBookingByIdCommand(IBookingService bookingService, Guid booking
     {
         Booking? booking = bookingService.FindBookingById(bookingId);
         Console.WriteLine(booking != null
-            ? $"Booking found: {booking.RoomCategory.Name} for User {booking.UserId}" //Было не дописано своство Name
+            ? $"Booking found: {booking.RoomCategory.Name} for User {booking.UserId}" //Р‘С‹Р»Рѕ РЅРµ РґРѕРїРёСЃР°РЅРѕ СЃРІРѕСЃС‚РІРѕ Name
             : "Booking not found.");
     }
 

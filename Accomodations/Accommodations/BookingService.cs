@@ -1,4 +1,4 @@
-using Accommodations.Models;
+ï»¿using Accommodations.Models;
 
 namespace Accommodations;
 
@@ -23,14 +23,14 @@ public class BookingService : IBookingService
 
     public Booking Book(int userId, string categoryName, DateTime startDate, DateTime endDate, Currency currency)
     {
-        if (endDate <= DateTime.Now)    //Óñëîâèå ïðè êîòîðîì êîíå÷íàÿ äàòà íå ìîæåò áûòü ìåíüøùå èëè ðàâíîé òåêóùåé.
+        if (endDate <= DateTime.Now)    //Ð£ÑÐ»Ð¾Ð²Ð¸Ðµ Ð¿Ñ€Ð¸ ÐºÐ¾Ñ‚Ð¾Ñ€Ð¾Ð¼ ÐºÐ¾Ð½ÐµÑ‡Ð½Ð°Ñ Ð´Ð°Ñ‚Ð° Ð½Ðµ Ð¼Ð¾Ð¶ÐµÑ‚ Ð±Ñ‹Ñ‚ÑŒ Ð¼ÐµÐ½ÑŒÑˆÑ‰Ðµ Ð¸Ð»Ð¸ Ñ€Ð°Ð²Ð½Ð¾Ð¹ Ñ‚ÐµÐºÑƒÑ‰ÐµÐ¹.
         {
             throw new ArgumentException("The end date cannot be equal to or less than the current date");
         }
 
         if (startDate == endDate)
         {
-            throw new ArgumentException("The start date of the booking cannot be equal to the end date of the booking"); //Äàòà íà÷àëà áðîíèðîâàíèÿ íå ìîæåò ðàâíÿòüñÿ äàòå êîíöà áðîíèðîâàíèÿ
+            throw new ArgumentException("The start date of the booking cannot be equal to the end date of the booking"); //Ð”Ð°Ñ‚Ð° Ð½Ð°Ñ‡Ð°Ð»Ð° Ð±Ñ€Ð¾Ð½Ð¸Ñ€Ð¾Ð²Ð°Ð½Ð¸Ñ Ð½Ðµ Ð¼Ð¾Ð¶ÐµÑ‚ Ñ€Ð°Ð²Ð½ÑÑ‚ÑŒÑÑ Ð´Ð°Ñ‚Ðµ ÐºÐ¾Ð½Ñ†Ð° Ð±Ñ€Ð¾Ð½Ð¸Ñ€Ð¾Ð²Ð°Ð½Ð¸Ñ
         }
 
         if (endDate < startDate)
@@ -123,14 +123,14 @@ public class BookingService : IBookingService
             throw new ArgumentException("Start date cannot be earlier than now date");
         }
 
-        int daysBeforeArrival = (booking.StartDate - DateTime.Now).Days + 1; //Ïîìåíÿë ìåñòàìè startDate è Now è ïðèáàâèë + 1 äåíü äëÿ ïðàâèëüíî âûñ÷èòûâàíèÿ.
-                                                                             //Áåç + 1 ó íàñ áû îòìåíà çà 2 äíÿ äî âúåçäà ðàâíÿëàñü 1 è ñîîòâåòñòâåííî øòðàô
-                                                                             //âûñ÷èòûâàëñÿ áû íåïðàâèëüíî
+        int daysBeforeArrival = (booking.StartDate - DateTime.Now).Days + 1; //ÐŸÐ¾Ð¼ÐµÐ½ÑÐ» Ð¼ÐµÑÑ‚Ð°Ð¼Ð¸ startDate Ð¸ Now Ð¸ Ð¿Ñ€Ð¸Ð±Ð°Ð²Ð¸Ð» + 1 Ð´ÐµÐ½ÑŒ Ð´Ð»Ñ Ð¿Ñ€Ð°Ð²Ð¸Ð»ÑŒÐ½Ð¾ Ð²Ñ‹ÑÑ‡Ð¸Ñ‚Ñ‹Ð²Ð°Ð½Ð¸Ñ.
+                                                                             //Ð‘ÐµÐ· + 1 Ñƒ Ð½Ð°Ñ Ð±Ñ‹ Ð¾Ñ‚Ð¼ÐµÐ½Ð° Ð·Ð° 2 Ð´Ð½Ñ Ð´Ð¾ Ð²ÑŠÐµÐ·Ð´Ð° Ñ€Ð°Ð²Ð½ÑÐ»Ð°ÑÑŒ 1 Ð¸ ÑÐ¾Ð¾Ñ‚Ð²ÐµÑ‚ÑÑ‚Ð²ÐµÐ½Ð½Ð¾ ÑˆÑ‚Ñ€Ð°Ñ„
+                                                                             //Ð²Ñ‹ÑÑ‡Ð¸Ñ‚Ñ‹Ð²Ð°Ð»ÑÑ Ð±Ñ‹ Ð½ÐµÐ¿Ñ€Ð°Ð²Ð¸Ð»ÑŒÐ½Ð¾
 
         return Math.Round(5000.0m / daysBeforeArrival, 0);
     }
 
-    private static decimal CalculateDiscount() //ïåðåìåííàÿ userId íå íóæíà. Îïóñòèë ïðèâàòûé ìåòîä íèæå ïî êîäó.
+    private static decimal CalculateDiscount() //Ð¿ÐµÑ€ÐµÐ¼ÐµÐ½Ð½Ð°Ñ userId Ð½Ðµ Ð½ÑƒÐ¶Ð½Ð°. ÐžÐ¿ÑƒÑÑ‚Ð¸Ð» Ð¿Ñ€Ð¸Ð²Ð°Ñ‚Ñ‹Ð¹ Ð¼ÐµÑ‚Ð¾Ð´ Ð½Ð¸Ð¶Ðµ Ð¿Ð¾ ÐºÐ¾Ð´Ñƒ.
     {
         return 0.1m;
     }
@@ -151,7 +151,7 @@ public class BookingService : IBookingService
     private static decimal CalculateBookingCost(decimal baseRate, int days, int userId, decimal currencyRate)
     {
         decimal cost = baseRate * days;
-        decimal totalCost = (cost - (cost * CalculateDiscount())) / currencyRate; //Èçìåíèë ðàññ÷åò íà ïðàâèëüíûé
+        decimal totalCost = (cost - (cost * CalculateDiscount())) / currencyRate; //Ð˜Ð·Ð¼ÐµÐ½Ð¸Ð» Ñ€Ð°ÑÑÑ‡ÐµÑ‚ Ð½Ð° Ð¿Ñ€Ð°Ð²Ð¸Ð»ÑŒÐ½Ñ‹Ð¹
         return totalCost;
     }
 }
