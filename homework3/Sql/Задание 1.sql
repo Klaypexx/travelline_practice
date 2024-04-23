@@ -1,65 +1,70 @@
-IF NOT EXISTS (SELECT*FROM sysobjects WHERE name='rooms')
-CREATE TABLE dbo.rooms (
+IF NOT EXISTS (SELECT * FROM sysobjects WHERE name = 'rooms')
+CREATE TABLE dbo.rooms 
+(
 	room_id INT IDENTITY(1,1) NOT NULL,
 	room_number INT NOT NULL,
 	room_type NVARCHAR(50) NOT NULL,
 	price_per_night MONEY NOT NULL,
-	availability INT NOT NULL,
+	availability BIT NOT NULL,
 	CONSTRAINT PK_rooms_id_room PRIMARY KEY(room_id)
-	)
+)
 
-IF NOT EXISTS ( SELECT * FROM sysobjects WHERE name ='customers')
-CREATE TABLE dbo.customers(
-	 customer_id INT IDENTITY(1,1) NOT NULL,
-	 first_name NVARCHAR(50) NOT NULL,
-	 last_name NVARCHAR(50) NOT NULL,
-	 email NVARCHAR(50) NOT NULL,
-     phone_number NVARCHAR(50) NOT NULL,
-	 CONSTRAINT PK_customers_id_customer PRIMARY KEY(customer_id)
-	)
+IF NOT EXISTS (SELECT * FROM sysobjects WHERE name = 'customers')
+CREATE TABLE dbo.customers
+(
+	customer_id INT IDENTITY(1,1) NOT NULL,
+	first_name NVARCHAR(50) NOT NULL,
+	last_name NVARCHAR(50) NOT NULL,
+	email NVARCHAR(50) NOT NULL,
+    phone_number NVARCHAR(50) NOT NULL,
+	CONSTRAINT PK_customers_id_customer PRIMARY KEY(customer_id)
+)
 
-IF NOT EXISTS ( SELECT * FROM sysobjects WHERE name ='bookings')
-CREATE TABLE dbo.bookings(
-	 booking_id INT IDENTITY(1,1) NOT NULL,
-	 customer_id INT NOT NULL,
-	 room_id INT NOT NULL,
-	 check_in_date DATE NOT NULL,
-     check_out_date DATE NOT NULL,
-	 CONSTRAINT PK_bookings_id_booking PRIMARY KEY(booking_id),
-	 CONSTRAINT FK_bookings_id_customer
-		FOREIGN KEY (customer_id) REFERENCES dbo.customers (customer_id),
-	 CONSTRAINT FK_bookings_id_room
-		FOREIGN KEY (room_id) REFERENCES dbo.rooms (room_id)
-	)
+IF NOT EXISTS (SELECT * FROM sysobjects WHERE name = 'bookings')
+CREATE TABLE dbo.bookings
+(
+	booking_id INT IDENTITY(1,1) NOT NULL,
+	customer_id INT NOT NULL,
+	room_id INT NOT NULL,
+	check_in_date DATE NOT NULL,
+    check_out_date DATE NOT NULL,
+	CONSTRAINT PK_bookings_id_booking PRIMARY KEY(booking_id),
+	CONSTRAINT FK_bookings_id_customer
+	FOREIGN KEY (customer_id) REFERENCES dbo.customers (customer_id),
+	CONSTRAINT FK_bookings_id_room
+	FOREIGN KEY (room_id) REFERENCES dbo.rooms (room_id)
+)
 
-IF NOT EXISTS ( SELECT * FROM sysobjects WHERE name ='facilities')
-CREATE TABLE dbo.facilities(
-	 facility_id INT IDENTITY(1,1) NOT NULL,
-	 facility_name NVARCHAR(50) NOT NULL,
-	 CONSTRAINT PK_facilities_id_facility PRIMARY KEY(facility_id)
-	)
+IF NOT EXISTS (SELECT * FROM sysobjects WHERE name = 'facilities')
+CREATE TABLE dbo.facilities
+(
+	facility_id INT IDENTITY(1,1) NOT NULL,
+	facility_name NVARCHAR(50) NOT NULL,
+	CONSTRAINT PK_facilities_id_facility PRIMARY KEY(facility_id)
+)
 
-IF NOT EXISTS ( SELECT * FROM sysobjects WHERE name ='room_to_facilities')
-CREATE TABLE dbo.room_to_facilities(
-	 room_id INT NOT NULL,
-	 facility_id INT NOT NULL,
-	 CONSTRAINT PK_roomtofacilities_id_roomtofacilities PRIMARY KEY(room_id, facility_id),
-	 CONSTRAINT FK_roomtofacilities_id_room
-		FOREIGN KEY (room_id) REFERENCES dbo.rooms(room_id),
-	 CONSTRAINT FK_roomtofacilities_id_facilities
-		FOREIGN KEY (facility_id) REFERENCES dbo.facilities(facility_id)
-	)
+IF NOT EXISTS (SELECT * FROM sysobjects WHERE name = 'room_to_facilities')
+CREATE TABLE dbo.room_to_facilities
+(
+	room_id INT NOT NULL,
+	facility_id INT NOT NULL,
+	CONSTRAINT PK_roomtofacilities_id_roomtofacilities PRIMARY KEY(room_id, facility_id),
+	CONSTRAINT FK_roomtofacilities_id_room
+	FOREIGN KEY (room_id) REFERENCES dbo.rooms(room_id),
+	CONSTRAINT FK_roomtofacilities_id_facilities
+	FOREIGN KEY (facility_id) REFERENCES dbo.facilities(facility_id)
+)
 
 INSERT INTO dbo.rooms (room_number, room_type, price_per_night, availability)
 VALUES
     (101, N'Standard', 1000.00, 1),
-    (102, N'Stadard', 1000.00, 1),
+    (102, N'Standard', 1000.00, 1),
     (103, N'Standard', 1000.00, 1),
     (201, N'Superior', 2000.00, 1),
     (202, N'Superior', 2000.00, 1),
     (203, N'Superior', 2000.00, 1),
     (301, N'Deluxe', 5000.00, 1),
-    (301, N'Deluxe', 5000.00, 1),
+    (302, N'Deluxe', 5000.00, 1),
     (303, N'Deluxe', 5000.00, 1)
 
 INSERT INTO dbo.customers (first_name, last_name, email, phone_number)
