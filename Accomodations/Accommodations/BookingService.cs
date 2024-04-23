@@ -148,7 +148,7 @@ public class BookingService : IBookingService
         return currencyRate;
     }
 
-    private static decimal CalculateBookingCost(decimal baseRate, int days, int userId, decimal currencyRate)
+    private static decimal CalculateBookingCost(decimal baseRate, int days, decimal currencyRate) //Убрал userId, так как он здесь лишний
     {
         decimal cost = baseRate * days;
         decimal totalCost = (cost - (cost * CalculateDiscount())) / currencyRate; //Изменил рассчет на правильный
