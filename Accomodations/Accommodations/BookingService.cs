@@ -57,7 +57,7 @@ public class BookingService : IBookingService
 
         int days = (endDate - startDate).Days;
         decimal currencyRate = GetCurrencyRate(currency);
-        decimal totalCost = CalculateBookingCost(selectedCategory.BaseRate, days, userId, currencyRate);
+        decimal totalCost = CalculateBookingCost(selectedCategory.BaseRate, days, currencyRate);
 
         Booking? booking = new()
         {
