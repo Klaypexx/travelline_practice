@@ -48,14 +48,14 @@ public static class AccommodationsProcessor
                     return;
                 }
 
-                CurrencyDto currency = (CurrencyDto)ValidationData.ThrowIfNull(ValidationData.CurrentDtoParse(parts[5]), "Currency value is incorrect");
+                CurrencyDto currency = (CurrencyDto)ParserData.ThrowIfNull(ParserData.EnumParse<CurrencyDto>(parts[5]), "Currency value is incorrect");
 
                 //Добавил CultureInfo.InvariantCulture, без него выдается ошибка при парсинге строкового типа даты
                 //Добавил условие для некорректной даты
 
-                DateTime startDate = (DateTime)ValidationData.ThrowIfNull(ValidationData.DateTimeParse(parts[3]), "Date of the book beginning is incorrect");
+                DateTime startDate = (DateTime)ParserData.ThrowIfNull(ParserData.DateTimeParse(parts[3]), "Date of the book beginning is incorrect");
 
-                DateTime endDate = (DateTime)ValidationData.ThrowIfNull(ValidationData.DateTimeParse(parts[4]), "Date of the book ending is incorrect");
+                DateTime endDate = (DateTime)ParserData.ThrowIfNull(ParserData.DateTimeParse(parts[4]), "Date of the book ending is incorrect");
 
                 BookingDto bookingDto = new()
                 {
@@ -83,7 +83,7 @@ public static class AccommodationsProcessor
                     return;
                 }
 
-                Guid bookingId = (Guid)ValidationData.ThrowIfNull(ValidationData.GuidParse(parts[1]), "Id is incorrect");
+                Guid bookingId = (Guid)ParserData.ThrowIfNull(ParserData.GuidParse(parts[1]), "Id is incorrect");
 
                 CancelBookingCommand cancelCommand = new(_bookingService, bookingId);
                 cancelCommand.Execute();
@@ -110,7 +110,7 @@ public static class AccommodationsProcessor
                     Console.WriteLine("Invalid arguments for 'find'. Expected format: 'find <BookingId>'");
                     return;
                 }
-                Guid id = (Guid)ValidationData.ThrowIfNull(ValidationData.GuidParse(parts[1]), "Id is incorrect");
+                Guid id = (Guid)ParserData.ThrowIfNull(ParserData.GuidParse(parts[1]), "Id is incorrect");
                 FindBookingByIdCommand findCommand = new(_bookingService, id);
                 findCommand.Execute();
                 break;
@@ -122,9 +122,9 @@ public static class AccommodationsProcessor
                     return;
                 }
 
-                startDate = (DateTime)ValidationData.ThrowIfNull(ValidationData.DateTimeParse(parts[1]), "Date of the book beginning is incorrect");
+                startDate = (DateTime)ParserData.ThrowIfNull(ParserData.DateTimeParse(parts[1]), "Date of the book beginning is incorrect");
 
-                endDate = (DateTime)ValidationData.ThrowIfNull(ValidationData.DateTimeParse(parts[2]), "Date of the book ending is incorrect");
+                endDate = (DateTime)ParserData.ThrowIfNull(ParserData.DateTimeParse(parts[2]), "Date of the book ending is incorrect");
 
                 string categoryName = parts[3];
                 SearchBookingsCommand searchCommand = new(_bookingService, startDate, endDate, categoryName);

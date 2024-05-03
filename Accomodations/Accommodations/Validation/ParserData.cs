@@ -1,7 +1,7 @@
 ﻿using Accommodations.Dto;
 
 namespace Accommodations.Validation;
-public static class ValidationData
+public static class ParserData
 {
     public static DateTime? DateTimeParse(string value)
     {
@@ -15,11 +15,11 @@ public static class ValidationData
         }
     }
 
-    public static CurrencyDto? CurrentDtoParse(string value)
+    public static T? EnumParse<T>(string value) where T : struct
     {
         try
         {
-            return (CurrencyDto)Enum.Parse(typeof(CurrencyDto), value, true);
+            return (T)Enum.Parse(typeof(T), value, true);
         }
         catch
         {
