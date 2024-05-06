@@ -1,6 +1,6 @@
-using System.Globalization;
-using Accommodations.Commands;
+﻿using Accommodations.Commands;
 using Accommodations.Dto;
+using Accommodations.Validation;
 
 namespace Accommodations;
 
@@ -39,7 +39,6 @@ public static class AccommodationsProcessor
     {
         string[] parts = input.Split(' ');
         string commandName = parts[0];
-
         switch (commandName)
         {
             case "book":
@@ -49,20 +48,31 @@ public static class AccommodationsProcessor
                     return;
                 }
 
-                CurrencyDto currency = (CurrencyDto) Enum.Parse(typeof(CurrencyDto), parts[5], true);
+                CurrencyDto currency = (CurrencyDto)ParserData.ThrowIfNull(ParserData.EnumParse<CurrencyDto>(parts[5]), "Currency value is incorrect");
+
+                //Добавил CultureInfo.InvariantCulture, без него выдается ошибка при парсинге строкового типа даты
+                //Добавил условие для некорректной даты
+
+                DateTime startDate = (DateTime)ParserData.ThrowIfNull(ParserData.DateTimeParse(parts[3]), "Date of the book beginning is incorrect");
+
+                DateTime endDate = (DateTime)ParserData.ThrowIfNull(ParserData.DateTimeParse(parts[4]), "Date of the book ending is incorrect");
 
                 BookingDto bookingDto = new()
                 {
                     UserId = int.Parse(parts[1]),
                     Category = parts[2],
-                    StartDate = DateTime.Parse(parts[3]),
-                    EndDate = DateTime.Parse(parts[4]),
+                    StartDate = startDate,
+                    EndDate = endDate,
                     Currency = currency,
                 };
 
                 BookCommand bookCommand = new(_bookingService, bookingDto);
                 bookCommand.Execute();
-                _executedCommands.Add(++s_commandIndex, bookCommand);
+
+                if (startDate >= DateTime.Now) //переменная _executedCommands будет увеличиваться, если startDate >= DateTime.Now
+                {
+                    _executedCommands.Add(++s_commandIndex, bookCommand);
+                }
                 Console.WriteLine("Booking command run is successful.");
                 break;
 
@@ -73,7 +83,8 @@ public static class AccommodationsProcessor
                     return;
                 }
 
-                Guid bookingId = Guid.Parse(parts[1]);
+                Guid bookingId = (Guid)ParserData.ThrowIfNull(ParserData.GuidParse(parts[1]), "Id is incorrect");
+
                 CancelBookingCommand cancelCommand = new(_bookingService, bookingId);
                 cancelCommand.Execute();
                 _executedCommands.Add(++s_commandIndex, cancelCommand);
@@ -81,6 +92,12 @@ public static class AccommodationsProcessor
                 break;
 
             case "undo":
+                //Добавил проверку на то, что количество команд будет 0
+                if (s_commandIndex == 0)
+                {
+                    Console.WriteLine("The command history is empty");
+                    return;
+                }
                 _executedCommands[s_commandIndex].Undo();
                 _executedCommands.Remove(s_commandIndex);
                 s_commandIndex--;
@@ -93,7 +110,7 @@ public static class AccommodationsProcessor
                     Console.WriteLine("Invalid arguments for 'find'. Expected format: 'find <BookingId>'");
                     return;
                 }
-                Guid id = Guid.Parse(parts[1]);
+                Guid id = (Guid)ParserData.ThrowIfNull(ParserData.GuidParse(parts[1]), "Id is incorrect");
                 FindBookingByIdCommand findCommand = new(_bookingService, id);
                 findCommand.Execute();
                 break;
@@ -104,8 +121,11 @@ public static class AccommodationsProcessor
                     Console.WriteLine("Invalid arguments for 'search'. Expected format: 'search <StartDate> <EndDate> <CategoryName>'");
                     return;
                 }
-                DateTime startDate = DateTime.Parse(parts[1]);
-                DateTime endDate = DateTime.Parse(parts[2]);
+
+                startDate = (DateTime)ParserData.ThrowIfNull(ParserData.DateTimeParse(parts[1]), "Date of the book beginning is incorrect");
+
+                endDate = (DateTime)ParserData.ThrowIfNull(ParserData.DateTimeParse(parts[2]), "Date of the book ending is incorrect");
+
                 string categoryName = parts[3];
                 SearchBookingsCommand searchCommand = new(_bookingService, startDate, endDate, categoryName);
                 searchCommand.Execute();
