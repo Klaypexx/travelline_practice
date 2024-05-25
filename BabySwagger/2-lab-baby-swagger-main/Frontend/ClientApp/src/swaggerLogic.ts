@@ -21,11 +21,10 @@ const executeButton = (requestDiv: HTMLElement | null, route: RouteType) => {
 
     executeBtn?.addEventListener('click', () => {
         fetchResponse(requestDiv, route)
-        if (responseSection?.classList.contains('close')) {
+        if (openBlock?.classList.contains('opblock-execute')) {
             openBlock?.classList.remove('opblock-execute');
             openBlock?.classList.add('btn-group');
             clearBtn?.classList.remove('close');
-            responseSection?.classList.remove('close');
         }
     })
 
@@ -39,6 +38,10 @@ const executeButton = (requestDiv: HTMLElement | null, route: RouteType) => {
 
 export const fetchResponse = async (requestDiv: HTMLElement | null, route: RouteType) => {
     const parameterInput = requestDiv?.querySelector<HTMLInputElement>('.parameters-col_input');
+    if (route.parameters && !parameterInput?.value) {
+        return;
+    }
+    
     const id = route.path.includes('{id}') && parameterInput ? parameterInput.value : '';
     const email = route.path.includes('{email}') && parameterInput ? parameterInput.value : '';
 
@@ -47,6 +50,7 @@ export const fetchResponse = async (requestDiv: HTMLElement | null, route: Route
     .replace('{email}', email.toString());
 
     const requestTextArea = requestDiv?.querySelector<HTMLTextAreaElement>(`.body-param__text`);
+
 
     const response = await fetch(`http://localhost:5154${baseUrl}`, {
         method: route.method,
@@ -65,6 +69,9 @@ const responseBlock = async (response: Response, requestDiv: HTMLElement | null)
     const responseCode = requestDiv?.querySelector<HTMLSpanElement>('.response-code .microlight');
     const responseBody = requestDiv?.querySelector<HTMLSpanElement>('.response-body .microlight');
     const responseHeader = requestDiv?.querySelector<HTMLSpanElement>('.response-headers .microlight');
+    const responseSection = requestDiv?.querySelector<HTMLDivElement>('.response-section');
+
+    responseSection?.classList.remove('close');
 
     if (requestUrl) {
         requestUrl.innerHTML = `${response.url}`;
